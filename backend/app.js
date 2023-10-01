@@ -2,15 +2,15 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const ravintolaRouter = require('./controllers/ravintolarouter')
-const userRouter = require('./controllers/ravintolarouter')
 const mongoose = require('mongoose')
+const restaurantRouter = require('./controllers/restaurantrouter')
+/* const userRouter = require('./controllers/userrouter') */
 
 app.use(cors())
 app.use(express.json())
 
-app.use('/api/ravintolat', ravintolaRouter)
-app.use('/api/users', userRouter)
+app.use('/api/restaurants', restaurantRouter)
+/* app.use('/api/users', userRouter) */
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {

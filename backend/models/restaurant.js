@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const ravintolaSchema = new mongoose.Schema({
+const restaurantSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -8,7 +8,7 @@ const ravintolaSchema = new mongoose.Schema({
   products: Array
 })
 
-ravintolaSchema.set('toJSON', {
+restaurantSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -16,4 +16,4 @@ ravintolaSchema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('Ravintola', ravintolaSchema)
+module.exports = mongoose.model('Restaurant', restaurantSchema)
