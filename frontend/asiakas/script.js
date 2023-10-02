@@ -1,4 +1,4 @@
-function restaurantInfo(){
-    let restaurantId = document.getElementById("restaurantId")
-    let 
+function restaurantInfo(id){
+    let restaurantId = id
 }
+
