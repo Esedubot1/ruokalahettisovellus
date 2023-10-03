@@ -2,6 +2,15 @@ const productRouter = require('express').Router()
 const jwt = require('jsonwebtoken')
 
 const Product = require('../models/product')
+const User = require('../models/user')
+
+const getTokenFrom = req => {
+  const authorization = req.get('authorization')
+  if (authorization && authorization.startsWith('Bearer ')) {
+    return authorization.replace('Bearer ', '')
+  }  
+  return null
+}
 
 productRouter.get('/', async (req, res) => {
   const products = await Product.find({})
@@ -39,10 +48,17 @@ productRouter.post('/', async (req, res) => {
   const body = req.body
 
   try {
+    const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
+    if (!decodedToken.id) {
+      return res.status(401).json({ error: 'token invalid' })
+    }
+
+    const user = await User.findById(decodedToken.id)
+
     const product = new Product({
       name: body.name,
       price: body.price,
-      restaurant: body.restaurant,
+      restaurant: user.restaurant,
       img: body.img
     })
     
