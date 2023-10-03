@@ -1,6 +1,15 @@
 const restaurantRouter = require('express').Router()
+const jwt = require('jsonwebtoken')
 
 const Restaurant = require('../models/restaurant')
+
+const getTokenFrom = req => {
+  const authorization = req.get('authorization')
+  if (authorization && authorization.startsWith('Bearer ')) {
+    return authorization.replace('Bearer ', '')
+  }  
+  return null
+}
 
 restaurantRouter.get('/', async (req, res) => {
   const restaurants = await Restaurant.find({})
@@ -26,7 +35,7 @@ restaurantRouter.post('/', async (req, res) => {
   try {
     const restaurant = new Restaurant({
       name: body.name,
-      products: body.products
+      address: body.address
     })
     
     const savedRestaurant = await restaurant.save()

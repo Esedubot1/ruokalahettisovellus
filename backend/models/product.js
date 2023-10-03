@@ -1,17 +1,22 @@
 const mongoose = require('mongoose')
 
-const restaurantSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
   },
-  address: {
+  price: {
+    type: Number,
+    required: true
+  },
+  restaurant: {
     type: String,
     required: true
-  }
+  },
+  img: String
 })
 
-restaurantSchema.set('toJSON', {
+productSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -19,4 +24,4 @@ restaurantSchema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('Restaurant', restaurantSchema)
+module.exports = mongoose.model('Product', productSchema)

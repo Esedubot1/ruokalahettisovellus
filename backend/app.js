@@ -4,13 +4,17 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const restaurantRouter = require('./controllers/restaurantrouter')
-/* const userRouter = require('./controllers/userrouter') */
+const productRouter = require('./controllers/productrouter')
+const userRouter = require('./controllers/userrouter')
+const loginRouter = require('./controllers/loginrouter')
 
 app.use(cors())
 app.use(express.json())
 
 app.use('/api/restaurants', restaurantRouter)
-/* app.use('/api/users', userRouter) */
+app.use('/api/products', productRouter)
+app.use('/api/users', userRouter)
+app.use('/api/login', loginRouter)
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {

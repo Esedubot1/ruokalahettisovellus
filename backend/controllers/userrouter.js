@@ -8,7 +8,7 @@ userRouter.get('/', async (req, res) => {
   res.json(users)
 })
 
-userRouter.get('/:id', async (req, res, next) => {
+userRouter.get('/:id', async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (user) {
@@ -22,19 +22,44 @@ userRouter.get('/:id', async (req, res, next) => {
 })
 
 userRouter.post('/', async (req, res) => {
-  const { username, password } = req.body
+  try {
+    const {username, password} = req.body
 
-  const saltRounds = 10
-  const passwordHash = await bcrypt.hash(password, saltRounds)
+    const saltRounds = 10
+    const passwordHash = await bcrypt.hash(password, saltRounds)
 
-  const user = new User({
-    username,
-    passwordHash
-  })
+    const user = new User({
+      username,
+      passwordHash
+    })
 
-  const savedUser = await user.save()
+    const savedUser = await user.save()
 
-  res.status(201).json(savedUser)
+    res.status(201).json(savedUser)
+  } catch(error) {
+    console.log(error.message)
+  }
+})
+
+userRouter.put('/:id', async (req, res) => {
+  const {username, password, restaurant} = req.body
+
+  try {
+    const saltRounds = 10
+    const passwordHash = await bcrypt.hash(password, saltRounds)
+
+    const user = {
+      username,
+      passwordHash,
+      restaurant
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, user, {new: true})
+
+    res.status(201).json(updatedUser)
+  } catch(error) {
+    console.log(error.message)
+  }
 })
 
 module.exports = userRouter
