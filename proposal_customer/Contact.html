@@ -1,0 +1,76 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+  
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content= 
+        "width=device-width, initial-scale=1.0"> 
+  
+    <link rel="stylesheet" href="style.css"> 
+    <title>ContactUs</title> 
+</head> 
+  
+<body> 
+    <div id="ContactUs"> 
+        <h1>Contact Us</h1> 
+        <form action="#"> 
+            <div class="form-shape"> 
+                <label for="query"> 
+                    Valitse asiasi
+                </label> 
+                <select name="myQuery" id="query"> 
+                    <option value="sel" selected> 
+                        Valitse 
+                    </option> 
+                    <option value="ord"> 
+                        Tilauseen liittyvät
+                    </option> 
+                    <option value="Site"> 
+                        Sivustoon liittyvät 
+                    </option> 
+                    <option value="fed"> 
+                        Toimitukseen liittyvä 
+                    </option> 
+                    <option value="others"> 
+                        Muu palaute 
+                    </option> 
+                </select> 
+            </div> 
+            <div class="form-shape"> 
+                <label for="name">Nimi</label> 
+                <input type="text" name="myName" 
+                    id="name" 
+                    placeholder="Kirjoita nimesi"> 
+            </div> 
+            <div class="form-shape"> 
+                <label for="email">Sähköposti</label> 
+                <input type="email" name="myEmail" 
+                    id="email" 
+                    placeholder="Lisää sähköpostisi"> 
+            </div> 
+            <div class="form-shape"> 
+                <label for="pho">Puhelin numerosi</label> 
+                <input type="phone" name="myPhone" 
+                    id="pho" 
+                    placeholder="Puhelin numero"> 
+            </div> 
+            <div id="radio"> 
+                Oletko "xxx" jäsen: 
+                Yes <input type="radio" name="eligible"> 
+                No <input type="radio" name="eligible"> 
+            </div> 
+            <div class="form-shape"> 
+                <label for="message"> 
+                    Lisätiedot 
+                </label> 
+                <textarea name="mesg" id="message" 
+                    cols="30" rows="10"> 
+                </textarea> 
+            </div> 
+            <input type="submit" value="Lähetä"> 
+            <input type="reset" value="Tyhjennä"> 
+        </form> 
+    </div> 
+</body> 
+  
+</html> 
