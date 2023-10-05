@@ -105,7 +105,7 @@ productRouter.delete('/:id', async (req, res) => {
     const product = await Product.findById(req.params.id)
 
     if(!user.restaurant === product.restaurant) {
-      return res.status(400).json({error: 'this user cannot edit the products of this restaurant'})
+      return res.status(400).json({error: 'this user cannot modify the products of this restaurant'})
     }
 
     await Product.findByIdAndRemove(req.params.id)

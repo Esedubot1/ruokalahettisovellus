@@ -68,7 +68,7 @@ restaurantRouter.put('/:id', async (req, res) => {
   try {
     const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
     if (!decodedToken.id) {
-      return res.status(401).json({ error: 'token invalid' })
+      return res.status(401).json({error: 'invalid token'})
     }
 
     const user = await User.findById(decodedToken.id)
@@ -76,7 +76,7 @@ restaurantRouter.put('/:id', async (req, res) => {
     const restaurant = {
       name: body.name,
       address: body.address,
-      user: user
+      user: body.user
     }
 
     if(!Restaurant.findById(req.params.id).user === user) {
