@@ -78,7 +78,7 @@ ul li a:hover{
 /*Setting the background image using before pseudo selector*/ 
 #container1::before{
     content:'';
-    background: url("./1.jpg") no-repeat center center/cover;
+    background: url("./image/city.jpg") no-repeat center center/cover;
     width: 100vw;
     height:59vh;
     position: absolute;
@@ -135,7 +135,7 @@ ul li a:hover{
 }
 #row2::before{
     content: '';
-    background: url('2.jpeg') no-repeat center center/cover;
+    background: url('/proposal_customer/image/city.jpg') no-repeat center center/cover;
     position: absolute;
     top: 0px;
     left:0px;
@@ -296,28 +296,3 @@ footer{
         height:44vh
     }
 }
-/* Dropdown Button */
-.dropbtn {
-    background-color: #04AA6D;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-  }
-  
-  /* The container <div> - needed to position the dropdown content */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  /* Dropdown Content (Hidden by Default) */
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
