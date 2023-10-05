@@ -93,4 +93,28 @@ restaurantRouter.put('/:id', async (req, res) => {
   }
 })
 
+restaurantRouter.delete('/', async (req, res) => {
+  try {
+    const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
+    if (!decodedToken.id) {
+      return res.status(401).json({error: 'token invalid'})
+    }
+
+    const user = await User.findById(decodedToken.id)
+
+    if(!user.restaurant) {
+      return res.status(400).json({error: 'this user is not associated with a restaurant'})
+    }
+
+    await Restaurant.findByIdAndRemove(user.restaurant)
+    user.restaurant = null
+    await user.save()
+
+    res.status(204).end()
+  } catch(error) {
+    console.log(error.message)
+    res.status(400).send(`${error.message}`)
+  }
+})
+
 module.exports = restaurantRouter
