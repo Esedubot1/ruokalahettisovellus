@@ -50,10 +50,14 @@ productRouter.post('/', async (req, res) => {
   try {
     const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
     if (!decodedToken.id) {
-      return res.status(401).json({ error: 'token invalid' })
+      return res.status(401).json({error: 'invalid token'})
     }
 
     const user = await User.findById(decodedToken.id)
+
+    if (!user.restaurant) {
+      return res.status(400).json({error: 'user not associated with restaurant'})
+    }
 
     const product = new Product({
       name: body.name,
@@ -87,6 +91,29 @@ productRouter.put('/:id', async (req, res) => {
     res.json(updatedProduct)
   } catch(error) {
     console.log(error.message)
+  }
+})
+
+productRouter.delete('/:id', async (req, res) => {
+  try {
+    const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
+    if (!decodedToken.id) {
+      return res.status(401).json({error: 'token invalid'})
+    }
+
+    const user = await User.findById(decodedToken.id)
+    const product = await Product.findById(req.params.id)
+
+    if(!user.restaurant === product.restaurant) {
+      return res.status(400).json({error: 'this user cannot modify the products of this restaurant'})
+    }
+
+    await Product.findByIdAndRemove(req.params.id)
+
+    res.status(204).end()
+  } catch(error) {
+    console.log(error.message)
+    res.status(400).send(`${error.message}`)
   }
 })
 

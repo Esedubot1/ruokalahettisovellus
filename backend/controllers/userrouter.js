@@ -38,6 +38,7 @@ userRouter.post('/', async (req, res) => {
     res.status(201).json(savedUser)
   } catch(error) {
     console.log(error.message)
+    res.json({error: error.message})
   }
 })
 
