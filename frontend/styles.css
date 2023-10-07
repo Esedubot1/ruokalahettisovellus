@@ -1,3 +1,5 @@
+
+/* Login css */
 .login-container{
     display: grid;
     grid-template-rows: 100px 100px 100px 100px 100px 100px;
@@ -7,3 +9,18 @@
 .login-container-item2{
     grid-row: 2/3;
 }
+
+.login-container-item3{
+    grid-row: 3/3;
+}
+
+.error-box{
+    grid-row: 2 / 4;
+    grid-column: 3 / 8;
+}
+
+.error-text{
+    color: red;
+    font-size: 20px;
+}
+/* -------------------------- */

@@ -1,4 +1,4 @@
-import backendService from "../service"
+// import backendService from "../service"
 
 innateRestaurant = {}
 
@@ -8,4 +8,4 @@ function restaurantInfo(restaurantId){
     })
 }
 
-export default {restaurantInfo}
+// export default {restaurantInfo}
