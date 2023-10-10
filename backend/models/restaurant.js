@@ -9,9 +9,13 @@ const restaurantSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  passwordHash: {
+    type: String,
     required: true
   }
 })
@@ -19,6 +23,7 @@ const restaurantSchema = new mongoose.Schema({
 restaurantSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
+    delete returnedObject.passwordHash
     delete returnedObject._id
     delete returnedObject.__v
   }

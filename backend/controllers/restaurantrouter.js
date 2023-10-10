@@ -1,16 +1,7 @@
 const restaurantRouter = require('express').Router()
-const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 const Restaurant = require('../models/restaurant')
-const User = require('../models/user')
-
-const getTokenFrom = req => {
-  const authorization = req.get('authorization')
-  if (authorization && authorization.startsWith('Bearer ')) {
-    return authorization.replace('Bearer ', '')
-  }  
-  return null
-}
 
 restaurantRouter.get('/', async (req, res) => {
   const restaurants = await Restaurant.find({})
@@ -31,89 +22,47 @@ restaurantRouter.get('/:id', async (req, res) => {
 })
 
 restaurantRouter.post('/', async (req, res) => {
-  const body = req.body
-
   try {
-    const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
-    if (!decodedToken.id) {
-      return res.status(401).json({ error: 'token invalid' })
-    }
+    const {name, address, username, password} = req.body
 
-    const user = await User.findById(decodedToken.id)
-
-    if(user.restaurant) {
-      return res.status(400).json({error: 'this user already is already associated with a restaurant'})
-    }
+    const saltRounds = 10
+    const passwordHash = await bcrypt.hash(password, saltRounds)
 
     const restaurant = new Restaurant({
-      name: body.name,
-      address: body.address,
-      user: user.id
+      name,
+      address,
+      username,
+      passwordHash
     })
-    
+
     const savedRestaurant = await restaurant.save()
-    user.restaurant = savedRestaurant.id
-    await user.save()
 
     res.status(201).json(savedRestaurant)
   } catch(error) {
     console.log(error.message)
-    res.status(400).send(`${error.message}`)
+    res.json({error: error.message})
   }
 })
 
 restaurantRouter.put('/:id', async (req, res) => {
-  const body = req.body
+  const {name, address, username, password} = req.body
 
   try {
-    const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
-    if (!decodedToken.id) {
-      return res.status(401).json({error: 'invalid token'})
-    }
-
-    const user = await User.findById(decodedToken.id)
+    const saltRounds = 10
+    const passwordHash = await bcrypt.hash(password, saltRounds)
 
     const restaurant = {
-      name: body.name,
-      address: body.address,
-      user: body.user
+      name,
+      address,
+      username,
+      passwordHash
     }
 
-    if(!Restaurant.findById(req.params.id).user === user) {
-      return res.status(401).json({
-        error: 'cannot be modified by this user'
-      })
-    }
-  
     const updatedRestaurant = await Restaurant.findByIdAndUpdate(req.params.id, restaurant, {new: true})
-  
-    res.json(updatedRestaurant)
+
+    res.status(201).json(updatedRestaurant)
   } catch(error) {
     console.log(error.message)
-  }
-})
-
-restaurantRouter.delete('/', async (req, res) => {
-  try {
-    const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
-    if (!decodedToken.id) {
-      return res.status(401).json({error: 'token invalid'})
-    }
-
-    const user = await User.findById(decodedToken.id)
-
-    if(!user.restaurant) {
-      return res.status(400).json({error: 'this user is not associated with a restaurant'})
-    }
-
-    await Restaurant.findByIdAndRemove(user.restaurant)
-    user.restaurant = null
-    await user.save()
-
-    res.status(204).end()
-  } catch(error) {
-    console.log(error.message)
-    res.status(400).send(`${error.message}`)
   }
 })
 

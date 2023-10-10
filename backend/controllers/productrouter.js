@@ -2,7 +2,7 @@ const productRouter = require('express').Router()
 const jwt = require('jsonwebtoken')
 
 const Product = require('../models/product')
-const User = require('../models/user')
+const Restaurant = require('../models/restaurant')
 
 const getTokenFrom = req => {
   const authorization = req.get('authorization')
@@ -53,16 +53,12 @@ productRouter.post('/', async (req, res) => {
       return res.status(401).json({error: 'invalid token'})
     }
 
-    const user = await User.findById(decodedToken.id)
-
-    if (!user.restaurant) {
-      return res.status(400).json({error: 'user not associated with restaurant'})
-    }
+    const restaurant = await Restaurant.findById(decodedToken.id)
 
     const product = new Product({
       name: body.name,
       price: body.price,
-      restaurant: user.restaurant,
+      restaurant: restaurant.id,
       img: body.img
     })
     
@@ -101,10 +97,10 @@ productRouter.delete('/:id', async (req, res) => {
       return res.status(401).json({error: 'token invalid'})
     }
 
-    const user = await User.findById(decodedToken.id)
+    const restaurant = await Restaurant.findById(decodedToken.id)
     const product = await Product.findById(req.params.id)
 
-    if(!user.restaurant === product.restaurant) {
+    if(!restaurant.id === product.restaurant) {
       return res.status(400).json({error: 'this user cannot modify the products of this restaurant'})
     }
 

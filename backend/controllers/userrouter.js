@@ -43,7 +43,7 @@ userRouter.post('/', async (req, res) => {
 })
 
 userRouter.put('/:id', async (req, res) => {
-  const {username, password, restaurant} = req.body
+  const {username, password} = req.body
 
   try {
     const saltRounds = 10
@@ -51,8 +51,7 @@ userRouter.put('/:id', async (req, res) => {
 
     const user = {
       username,
-      passwordHash,
-      restaurant
+      passwordHash
     }
 
     const updatedUser = await User.findByIdAndUpdate(req.params.id, user, {new: true})

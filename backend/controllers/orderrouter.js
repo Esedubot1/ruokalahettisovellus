@@ -77,7 +77,8 @@ orderRouter.put('/:id', async (req, res) => {
     const order = {
       recipient: body.user,
       restaurant: body.restaurant,
-      products: body.products
+      products: body.products,
+      deliverer: body.deliverer
     }
   
     const updatedOrder = await Order.findByIdAndUpdate(req.params.id, order, {new: true})
