@@ -1,11 +1,16 @@
-// import backendService from "../service"
+let restaurants = []
 
-innateRestaurant = {}
 
-function restaurantInfo(restaurantId){
-    backendService.getOne(restaurantId).then(response => {
-        innateRestaurant.push(response.data)
-    })
+async function getRestaurants() {
+    fetch("http://localhost:3001/api/restaurants")
+        .then(response => response.json())
+        .then(data => data.forEach(element => {
+            restaurants.push(element)
+        }))
+
+    console.log(restaurants)
 }
 
-// export default {restaurantInfo}
+getRestaurants()
+
+
