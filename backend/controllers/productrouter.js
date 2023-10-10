@@ -32,11 +32,12 @@ productRouter.get('/:id', async (req, res) => {
 
 productRouter.get('/from/:restaurant', async (req, res) => {
   const restaurant = req.params.restaurant
+  console.log(restaurant)
 
   try {
     const products = await Product.find({})
 
-    const filtered = products.filter((a) => a.restaurant === restaurant)
+    const filtered = products.filter((a) => a.restaurant.toString() === restaurant)
 
     res.json(filtered)
   } catch (error) {

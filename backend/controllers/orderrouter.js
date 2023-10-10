@@ -36,7 +36,7 @@ orderRouter.get('/from/:restaurant', async (req, res) => {
   try {
     const orders = await Order.find({})
 
-    const filtered = orders.filter((a) => a.restaurant === restaurant)
+    const filtered = orders.filter((a) => a.restaurant.toString() === restaurant)
 
     res.json(filtered)
   } catch (error) {
