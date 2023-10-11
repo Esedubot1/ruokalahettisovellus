@@ -59,7 +59,8 @@ orderRouter.post('/', async (req, res) => {
     const order = new Order({
       recipient: user.id,
       restaurant: body.restaurant,
-      products: body.products
+      products: body.products,
+      status: 0
     })
     
     const savedOrder = await order.save()
@@ -94,6 +95,7 @@ orderRouter.put('/:id', async (req, res) => {
 
     if(deliverer && !order.deliverer) {
       order.deliverer = deliverer.id
+      order.status = 2
     } else if (deliverer) {
       return res.status(401).json({error: 'order already has a deliverer'})
     }

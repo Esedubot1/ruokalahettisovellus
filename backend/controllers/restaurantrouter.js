@@ -23,7 +23,7 @@ restaurantRouter.get('/:id', async (req, res) => {
 
 restaurantRouter.post('/', async (req, res) => {
   try {
-    const {name, address, username, password} = req.body
+    const {name, address, info, username, password} = req.body
 
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
@@ -31,6 +31,7 @@ restaurantRouter.post('/', async (req, res) => {
     const restaurant = new Restaurant({
       name,
       address,
+      info,
       username,
       passwordHash
     })
@@ -54,6 +55,7 @@ restaurantRouter.put('/:id', async (req, res) => {
     const restaurant = {
       name,
       address,
+      info,
       username,
       passwordHash
     }
