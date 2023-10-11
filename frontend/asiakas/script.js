@@ -8,7 +8,31 @@ async function getRestaurants() {
             restaurants.push(element)
         }))
 
-    console.log(restaurants[0])
+    console.log(restaurants)
+    createDivs()
+}
+
+function createDivs() {
+    restaurants.forEach(element => {
+
+        // New Div for restaurant
+        let restaurantContainer = document.getElementById("user-restaurants")
+        let newRestaurant = document.createElement("div")
+        newRestaurant.className = "newRestaurant"
+        restaurantContainer.appendChild(newRestaurant)
+
+        // Restaurant name
+        let newRestaurantName = document.createElement("h1")
+        newRestaurantName.className = "newRestaurantName"
+        newRestaurantName.innerHTML = element.name
+        newRestaurant.appendChild(newRestaurantName)
+
+        // Restaurant adress
+
+        // Restaurant logo
+
+        // Restaurant info
+    })
 }
 
 getRestaurants()
