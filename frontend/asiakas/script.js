@@ -29,15 +29,16 @@ function createDivs() {
         newRestaurant.appendChild(newRestaurantName)
 
         // Restaurant adress
-
         let newRestaurantAddress = document.createElement("p")
         newRestaurantAddress.className = "newRestaurantAddress"
         newRestaurantAddress.innerHTML = element.address
         newRestaurant.appendChild(newRestaurantAddress)
 
-        // Restaurant logo
-
         // Restaurant info
+        let newRestaurantInfo = document.createElement("p")
+        newRestaurantInfo.className = "newRestaurantInfo"
+        newRestaurantInfo.innerHTML = element.info
+        newRestaurant.appendChild(newRestaurantInfo)
     })
 }
 
