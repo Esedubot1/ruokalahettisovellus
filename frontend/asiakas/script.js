@@ -13,6 +13,7 @@ async function getRestaurants() {
 }
 
 function createDivs() {
+    // document.getElementById("user-restaurants").innerHTML = ""
     restaurants.forEach(element => {
 
         // New Div for restaurant
