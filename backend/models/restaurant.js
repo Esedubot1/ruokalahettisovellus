@@ -9,6 +9,9 @@ const restaurantSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  info: {
+    type: String
+  },
   username: {
     type: String,
     required: true,
