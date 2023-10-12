@@ -82,18 +82,19 @@ orderRouter.put('/:id', async (req, res) => {
     }
 
     const order = await Order.findById(req.params.id)
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(decodedToken.id)
     const deliverer = await Deliverer.findById(decodedToken.id)
 
-    if(user && user.id === order.user) {
-      if(user.id === order.user) {
-        order.products = body.products
-      } else {
-        return res.status(401).json({error: 'not your order'})
-      }
+    console.log('user: ' + user.id)
+    console.log('order: ' + order.recipient)
+
+    if (user && user.id === order.recipient) {
+      order.products = body.products
+    } else if (user) {
+      return res.status(401).json({error: 'not your order'})
     }
 
-    if(deliverer && !order.deliverer) {
+    if (deliverer && !order.deliverer) {
       order.deliverer = deliverer.id
       order.status = 2
     } else if (deliverer) {

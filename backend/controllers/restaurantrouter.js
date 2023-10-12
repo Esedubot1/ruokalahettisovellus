@@ -46,7 +46,7 @@ restaurantRouter.post('/', async (req, res) => {
 })
 
 restaurantRouter.put('/:id', async (req, res) => {
-  const {name, address, username, password} = req.body
+  const {name, address, info, username, password} = req.body
 
   try {
     const saltRounds = 10

@@ -75,14 +75,26 @@ productRouter.put('/:id', async (req, res) => {
   const body = req.body
 
   try {
-    const product = {
+    const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
+    if (!decodedToken.id) {
+      return res.status(401).json({error: 'token invalid'})
+    }
+
+    const restaurant = await Restaurant.findById(decodedToken.id)
+    const product = await Product.findById(req.params.id)
+
+    if(restaurant.id != product.restaurant) {
+      return res.status(400).json({error: 'this user cannot modify the products of this restaurant'})
+    }
+
+    const newProduct = {
       name: body.name,
       price: body.price,
-      restaurant: body.restaurant,
+      restaurant: restaurant.id,
       img: body.img
     }
   
-    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, product, {new: true})
+    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, newProduct, {new: true})
   
     res.json(updatedProduct)
   } catch(error) {
@@ -100,7 +112,7 @@ productRouter.delete('/:id', async (req, res) => {
     const restaurant = await Restaurant.findById(decodedToken.id)
     const product = await Product.findById(req.params.id)
 
-    if(!restaurant.id === product.restaurant) {
+    if(restaurant.id != product.restaurant) {
       return res.status(400).json({error: 'this user cannot modify the products of this restaurant'})
     }
 
