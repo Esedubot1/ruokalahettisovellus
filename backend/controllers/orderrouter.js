@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 
 const Order = require('../models/order')
 const User = require('../models/user')
+const Restaurant = require('../models/restaurant')
 const Deliverer = require('../models/deliverer')
 
 const getTokenFrom = req => {
@@ -83,22 +84,34 @@ orderRouter.put('/:id', async (req, res) => {
 
     const order = await Order.findById(req.params.id)
     const user = await User.findById(decodedToken.id)
+    const restaurant = await Restaurant.findById(decodedToken.id)
     const deliverer = await Deliverer.findById(decodedToken.id)
 
-    console.log('user: ' + user.id)
-    console.log('order: ' + order.recipient)
+    if (order.status === 0) {
+      if (user && user.id === order.recipient) {
+        order.products = body.products
+      } else if (user) {
+        return res.status(401).json({error: 'not your order'})
+      }
 
-    if (user && user.id === order.recipient) {
-      order.products = body.products
-    } else if (user) {
-      return res.status(401).json({error: 'not your order'})
-    }
-
-    if (deliverer && !order.deliverer) {
-      order.deliverer = deliverer.id
-      order.status = 2
-    } else if (deliverer) {
-      return res.status(401).json({error: 'order already has a deliverer'})
+      if (restaurant && restaurant.id === order.restaurant) {
+        order.status = 1
+      } else if (restaurant) {
+        return res.status(401).json({error: 'wrong restaurant'})
+      }
+    } else if (order.status === 1) {
+      if (deliverer && !order.deliverer) {
+        order.deliverer = deliverer.id
+        order.status = 2
+      } else if (deliverer) {
+        return res.status(401).json({error: 'order already has a deliverer'})
+      }
+    } else if (order.status === 2) {
+      if (user && user.id === order.recipient) {
+        order.status = 3
+      } else if (user) {
+        return res.status(401).json({error: 'not your order'})
+      }
     }
 
     const updatedOrder = await Order.findByIdAndUpdate(req.params.id, order, {new: true})
@@ -108,5 +121,28 @@ orderRouter.put('/:id', async (req, res) => {
     console.log(error.message)
   }
 })
+
+/* orderRouter.delete('/:id', async (req, res) => {
+  try {
+    const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
+    if (!decodedToken.id) {
+      return res.status(401).json({error: 'token invalid'})
+    }
+
+    const restaurant = await Restaurant.findById(decodedToken.id)
+    const product = await Product.findById(req.params.id)
+
+    if (restaurant.id != product.restaurant) {
+      return res.status(400).json({error: 'this user cannot modify the products of this restaurant'})
+    }
+
+    await Order.findByIdAndRemove(req.params.id)
+
+    res.status(204).end()
+  } catch(error) {
+    console.log(error.message)
+    res.status(400).send(`${error.message}`)
+  }
+}) */
 
 module.exports = orderRouter
