@@ -14,6 +14,7 @@ async function getRestaurants() {
 
 function createDivs() {
     // document.getElementById("user-restaurants").innerHTML = ""
+    let restaurantCounter = 0
     restaurants.forEach(element => {
 
         // New Div for restaurant
@@ -34,14 +35,29 @@ function createDivs() {
         newRestaurantAddress.innerHTML = element.address
         newRestaurant.appendChild(newRestaurantAddress)
 
+        // Restaurant info button
+        let newRestaurantButton = document.createElement("button")
+        newRestaurantButton.className = "newRestaurantButton"
+        newRestaurantButton.innerHTML = "Information"
+        newRestaurantButton.id = restaurantCounter
+        newRestaurantButton.addEventListener("click", openInfo)
+        newRestaurant.appendChild(newRestaurantButton)
+
+
         // Restaurant info
-        let newRestaurantInfo = document.createElement("p")
-        newRestaurantInfo.className = "newRestaurantInfo"
-        newRestaurantInfo.innerHTML = element.info
-        newRestaurant.appendChild(newRestaurantInfo)
+        // let newRestaurantInfo = document.createElement("p")
+        // newRestaurantInfo.className = "newRestaurantInfo"
+        // newRestaurantInfo.innerHTML = element.info
+        // newRestaurant.appendChild(newRestaurantInfo)
+        restaurantCounter++
     })
 }
 
 getRestaurants()
+
+function openInfo(event){
+    let buttonId = event.target.id
+    document.getElementById("restaurant-info-dropdown").innerHTML = restaurants[buttonId].info
+}  
 
 

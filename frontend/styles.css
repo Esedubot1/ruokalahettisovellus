@@ -28,3 +28,49 @@
     font-size: 20px;
 }
 /* -------------------------- */
+
+/* Asiakas */
+
+.restaurant-info-dropdown{
+    position: absolute;
+    left: 0;
+    background-color: white;
+    padding: .75rem;
+    border-radius: .25rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .70);
+}
+
+.newRestaurant{
+    padding: 10px;
+    margin: 10px;
+    border: solid 7px black;
+    border-radius: 10px;
+}
+
+.newRestaurantButton{
+    padding: 5px;
+    background-color: rgb(146, 226, 146);
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: solid 3px black;
+}
+
+.newRestaurantButton:hover{
+    background-color: rgb(255, 255, 255);
+    
+}
+
+
+.user-restaurants{
+    display: flex;
+}
+
+
+.grid-container{
+    display: grid;
+}
+
+
+/* -------------------------- */
+
