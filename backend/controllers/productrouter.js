@@ -12,11 +12,13 @@ const getTokenFrom = req => {
   return null
 }
 
+/* Hakee kaikki tuotteet */
 productRouter.get('/', async (req, res) => {
   const products = await Product.find({})
   res.json(products)
 })
 
+/* Hakee tuotteen ID:n perusteella */
 productRouter.get('/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
@@ -30,6 +32,7 @@ productRouter.get('/:id', async (req, res) => {
   }
 })
 
+/* Hakee kaikki tuotteet ravintolan ID:n perusteella */
 productRouter.get('/from/:restaurant', async (req, res) => {
   const restaurant = req.params.restaurant
 
@@ -44,6 +47,13 @@ productRouter.get('/from/:restaurant', async (req, res) => {
   }
 })
 
+/* Luo uuden tuotteen. POST requestin tulee olla JSON-muodossa ja kaikki kentät kuvalinkkiä lukuun ottamatta ovat pakollisia */
+/* Kentät:
+    name: tuotteen nimi,
+    price: tuotteen hinta,
+    restaurant: ravintolan ID (täyttyy automaattisesti tokenin perusteella),
+    img: linkki mahdolliseen tuotekuvaan
+*/
 productRouter.post('/', async (req, res) => {
   const body = req.body
 
@@ -71,6 +81,7 @@ productRouter.post('/', async (req, res) => {
   }
 })
 
+/* Muokkaa olemassaolevaa tuotetta ID:n perusteella */
 productRouter.put('/:id', async (req, res) => {
   const body = req.body
 
@@ -102,6 +113,7 @@ productRouter.put('/:id', async (req, res) => {
   }
 })
 
+/* Poistaa tuotteen ID:n perusteella */
 productRouter.delete('/:id', async (req, res) => {
   try {
     const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)

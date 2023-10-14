@@ -3,11 +3,13 @@ const bcrypt = require('bcrypt')
 
 const Restaurant = require('../models/restaurant')
 
+/* Hakee kaikki ravintolat */
 restaurantRouter.get('/', async (req, res) => {
   const restaurants = await Restaurant.find({})
   res.json(restaurants)
 })
 
+/* Hakee yhden ravintolan ID:n perusteella */
 restaurantRouter.get('/:id', async (req, res) => {
   try {
     const restaurant = await Restaurant.findById(req.params.id)
@@ -21,6 +23,7 @@ restaurantRouter.get('/:id', async (req, res) => {
   }
 })
 
+/* Luo uuden ravintolan. POST requestin tulee olla JSON-muodossa ja kaikki kentät infoa lukuun ottamatta ovat pakollisia */
 restaurantRouter.post('/', async (req, res) => {
   try {
     const {name, address, info, username, password} = req.body
@@ -45,6 +48,7 @@ restaurantRouter.post('/', async (req, res) => {
   }
 })
 
+/* Muokkaa olemassaolevaa ravintolaa ID:n perusteella */
 restaurantRouter.put('/:id', async (req, res) => {
   const {name, address, info, username, password} = req.body
 

@@ -3,11 +3,13 @@ const bcrypt = require('bcrypt')
 
 const User = require('../models/user')
 
+/* Hakee kaikki asiakkaat */
 userRouter.get('/', async (req, res) => {
   const users = await User.find({})
   res.json(users)
 })
 
+/* Hakee asiakkaan ID:n perusteella */
 userRouter.get('/:id', async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
@@ -21,6 +23,7 @@ userRouter.get('/:id', async (req, res) => {
   }
 })
 
+/* Luo uuden asiakaskäyttäjän */
 userRouter.post('/', async (req, res) => {
   try {
     const {username, password} = req.body
@@ -42,6 +45,7 @@ userRouter.post('/', async (req, res) => {
   }
 })
 
+/* Muokkaa olemassa olevaa asiakaskäyttäjää ID:n perusteella */
 userRouter.put('/:id', async (req, res) => {
   const {username, password} = req.body
 

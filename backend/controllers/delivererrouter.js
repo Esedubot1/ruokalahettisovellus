@@ -8,6 +8,7 @@ delivererRouter.get('/', async (req, res) => {
   res.json(deliverers)
 })
 
+/* Hakee kaikki kuljettajat */
 delivererRouter.get('/:id', async (req, res) => {
   try {
     const deliverer = await Deliverer.findById(req.params.id)
@@ -21,6 +22,7 @@ delivererRouter.get('/:id', async (req, res) => {
   }
 })
 
+/* Luo uuden kuljettajakäyttäjän */
 delivererRouter.post('/', async (req, res) => {
   try {
     const {username, password} = req.body
@@ -42,6 +44,7 @@ delivererRouter.post('/', async (req, res) => {
   }
 })
 
+/* Muokkaa kuljettajakäyttäjää ID:n perusteella */
 delivererRouter.put('/:id', async (req, res) => {
   const {username, password} = req.body
 

@@ -5,6 +5,7 @@ const User = require('../models/user')
 const Restaurant = require('../models/restaurant')
 const Deliverer = require('../models/deliverer') 
 
+/* Kirjautuu sisään asiakkaana */
 loginRouter.post('/user', async (req, res) => {
   const {username, password} = req.body
 
@@ -32,6 +33,7 @@ loginRouter.post('/user', async (req, res) => {
     .send({token, username: user.username})
 })
 
+/* Kirjautuu sisään ravintolana */
 loginRouter.post('/restaurant', async (req, res) => {
   const {username, password} = req.body
 
@@ -58,6 +60,7 @@ loginRouter.post('/restaurant', async (req, res) => {
     .send({token, username: user.username})
 })
 
+/* Kirjautuu sisään kuljettajana */
 loginRouter.post('/deliverer', async (req, res) => {
   const {username, password} = req.body
 
