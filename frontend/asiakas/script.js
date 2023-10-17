@@ -1,5 +1,5 @@
 let restaurants = []
-
+let productions = []
 
 async function getRestaurants() {
     await fetch("http://localhost:3001/api/restaurants")
@@ -56,8 +56,19 @@ function createDivs() {
 getRestaurants()
 
 function openInfo(event){
+    productions = []
     let buttonId = event.target.id
-    document.getElementById("restaurant-info-dropdown").innerHTML = restaurants[buttonId].info
+    document.getElementById("restaurant-information").innerHTML = restaurants[buttonId].info
+
+    getProducts(buttonId)
 }  
 
+async function getProducts(id){
+    await fetch(`http://localhost:3001/api/restaurants/from/${id}`)
+        .then(response => response.json())
+        .then(data => data.forEach(element => {
+            productions.push(element)
+        }))
+    console.log(productions)
+}
 

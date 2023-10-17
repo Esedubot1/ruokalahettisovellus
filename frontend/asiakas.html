@@ -8,15 +8,51 @@
   
 </head>
 <body>
-    <div class="grid-field">
-      <div class="grid-container">
+    <div class="nav-bar-container">
+      <header class="cd__intro">
+        <h1> Responsive Navbar with Logo Example </h1>
+        <p> Responsive Navbar with Logo </p>
+      </header>
+      <main class="cd__main">
+        <nav id="navbar" class="">
+          <div class="nav-wrapper">
+            <!-- Navbar Logo -->
+            <div class="logo">
+              <!-- Logo Placeholder for Illustration -->
+              <a href="#home"><img width="95px" height="auto" src="images/logo.jpg"></a>
+          </div>
+        <!-- Navbar Links -->
+        <ul id="menu">
+          <div class="dropdown">
+            <button class="dropbtn">RAVINTOLAT
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <a href="#">Link 1</a>
+              <a href="#">Link 2</a>
+              <a href="#">Link 3</a>
+            </div>
+          </div>
+          <li><a href="#home">home</a></a></li>
+          <li><a href="#services">virman tietoja?</a></li>
+          <li><a href="#about">yhteydenotto?</a></li>
+          <li><a href="#contact">Ostoskori?</a></li>
+          <li><a href="#index.html">Logout</a></li>
+        </ul>
+  </div>
+</nav>
+    <div class="restaurant-field">
         <div class="user-restaurants" id="user-restaurants">
           
         </div>
-      </div>
-      <div class="restaurant-info-dropdown" id="restaurant-info-dropdown">
+        <div class="restaurant-dropdown" id="restaurant-info-dropdown">
+          <div class="restaurant-information" id="restaurant-information">
 
-      </div>
+          </div>
+          <div class="restaurant-products" id="restaurant-products">
+            
+          </div>
+        </div>
     </div>
   <script type="module" src="asiakas/script.js"></script>
 </body>
