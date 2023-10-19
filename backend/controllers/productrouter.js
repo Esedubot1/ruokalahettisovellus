@@ -52,8 +52,10 @@ productRouter.get('/from/:restaurant', async (req, res) => {
     name: tuotteen nimi,
     price: tuotteen hinta,
     restaurant: ravintolan ID (täyttyy automaattisesti tokenin perusteella),
+    ingredients: lista ainesosista (string),
     img: linkki mahdolliseen tuotekuvaan
 */
+
 productRouter.post('/', async (req, res) => {
   const body = req.body
 
@@ -69,6 +71,7 @@ productRouter.post('/', async (req, res) => {
       name: body.name,
       price: body.price,
       restaurant: restaurant.id,
+      ingredients: body.ingredients,
       img: body.img
     })
     
@@ -102,6 +105,7 @@ productRouter.put('/:id', async (req, res) => {
       name: body.name,
       price: body.price,
       restaurant: restaurant.id,
+      ingredients: body.ingredients,
       img: body.img
     }
   
