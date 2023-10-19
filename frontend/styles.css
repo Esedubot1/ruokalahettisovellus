@@ -40,9 +40,17 @@
 }
 
 .restaurant-products{
+    display: flex;
+    width: 1000px;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
+}
+
+.newProductionDiv{
+  margin: 10px;
+  padding: 10px;
+  border: solid 7px black;
 }
 
 .newRestaurant{
@@ -65,6 +73,9 @@
     background-color: rgb(255, 255, 255);
 }
 
+.newRestaurantAddress{
+    margin: 10px;
+}
 
 .user-restaurants{
     display: flex;

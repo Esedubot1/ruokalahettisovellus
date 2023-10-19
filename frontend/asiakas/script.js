@@ -56,19 +56,43 @@ function createDivs() {
 getRestaurants()
 
 function openInfo(event){
-    productions = []
     let buttonId = event.target.id
     document.getElementById("restaurant-information").innerHTML = restaurants[buttonId].info
 
-    getProducts(buttonId)
+    getProducts(restaurants[buttonId].id)
 }  
 
 async function getProducts(id){
-    await fetch(`http://localhost:3001/api/restaurants/from/${id}`)
+    productions = []
+    document.getElementById("restaurant-products").innerHTML = ""
+    await fetch(`http://localhost:3001/api/products/from/${id}`)
         .then(response => response.json())
         .then(data => data.forEach(element => {
             productions.push(element)
         }))
+
+    productions.forEach(element => {
+        //Product div
+        let newProductionDiv = document.createElement("div")
+        newProductionDiv.className = "newProductionDiv"
+        document.getElementById("restaurant-products").appendChild(newProductionDiv)
+
+        // Product name
+        let newProductionName = document.createElement("h1")
+        newProductionName.innerHTML = element.name
+        newProductionDiv.appendChild(newProductionName)
+
+        // Product price 
+        let newProductionPrice = document.createElement("p")
+        newProductionPrice.innerHTML = element.price
+        newProductionDiv.appendChild(newProductionPrice)
+
+        // Production ingredients
+
+
+        // Order Button
+        
+    })
     console.log(productions)
 }
 
