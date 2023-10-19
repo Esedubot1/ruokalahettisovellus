@@ -88,11 +88,22 @@ async function getProducts(id){
         newProductionDiv.appendChild(newProductionPrice)
 
         // Production ingredients
+        let newProductionIngredient = document.createElement("p")
+        newProductionIngredient.innerHTML = element.ingredients
+        newProductionDiv.appendChild(newProductionIngredient)
 
 
         // Order Button
-        
+        let newProductionButton = document.createElement("button")
+        newProductionButton.innerHTML = "Order"
+        newProductionButton.className = "newRestaurantButton"
+        newProductionButton.addEventListener("click", openOrderForum)
+        newProductionDiv.appendChild(newProductionButton)
+
     })
     console.log(productions)
 }
 
+function openOrderForum(){
+    
+}
