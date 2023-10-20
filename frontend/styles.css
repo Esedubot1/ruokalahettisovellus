@@ -42,12 +42,19 @@
 .restaurant-products{
     display: flex;
     width: 1000px;
+    height: 167px;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
 }
 
 .newProductionDiv{
+  margin: 10px;
+  padding: 10px;
+  border: solid 7px black;
+}
+
+.newOrderDiv{
   margin: 10px;
   padding: 10px;
   border: solid 7px black;
@@ -69,6 +76,32 @@
     border: solid 3px black;
 }
 
+.orderForum{
+  display: grid;
+  margin: 10px;
+  justify-content: center;
+}
+
+.orderForumItem{
+    margin: 10px;
+    display: flex;
+}
+
+.orderList{
+    display: grid;
+    border: solid 7px black;
+    padding: 10px;
+}
+.ordersDiv{
+  height: 167px;
+  display: flex;
+  width: 1000px;
+  height: 167px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
 .newRestaurantButton:hover{
     background-color: rgb(255, 255, 255);
     cursor: pointer;
@@ -81,6 +114,7 @@
 .user-restaurants{
     display: flex;
     width: 1000px;
+    height: 167px;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
@@ -309,7 +343,7 @@
   
   /* Style the footer */
   .footer {
-  background-color: white;
+  background: palevioletred;
   padding: 10px;
   text-align: center;
   }

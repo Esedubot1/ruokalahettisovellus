@@ -13,7 +13,6 @@ async function getRestaurants() {
 }
 
 function createDivs() {
-    // document.getElementById("user-restaurants").innerHTML = ""
     let restaurantCounter = 0
     restaurants.forEach(element => {
 
@@ -43,12 +42,6 @@ function createDivs() {
         newRestaurantButton.addEventListener("click", openInfo)
         newRestaurant.appendChild(newRestaurantButton)
 
-
-        // Restaurant info
-        // let newRestaurantInfo = document.createElement("p")
-        // newRestaurantInfo.className = "newRestaurantInfo"
-        // newRestaurantInfo.innerHTML = element.info
-        // newRestaurant.appendChild(newRestaurantInfo)
         restaurantCounter++
     })
 }
@@ -64,7 +57,7 @@ function openInfo(event){
 
 async function getProducts(id){
     productions = []
-    document.getElementById("restaurant-products").innerHTML = ""
+    document.getElementById("restaurant-products").innerHTML = null
     await fetch(`http://localhost:3001/api/products/from/${id}`)
         .then(response => response.json())
         .then(data => data.forEach(element => {
@@ -95,7 +88,7 @@ async function getProducts(id){
 
         // Order Button
         let newProductionButton = document.createElement("button")
-        newProductionButton.innerHTML = "Order"
+        newProductionButton.innerHTML = "Add"
         newProductionButton.className = "newRestaurantButton"
         newProductionButton.addEventListener("click", openOrderForum)
         newProductionDiv.appendChild(newProductionButton)
@@ -104,6 +97,15 @@ async function getProducts(id){
     console.log(productions)
 }
 
-function openOrderForum(){
+function openOrderForum(event){
+    let orderList = document.getElementById("ordersDiv")
+    let orderId = event.target.id
+
+    // Div for order
+    let newOrderDiv = document.createElement("div")
+    newOrderDiv.classList = "newOrderDiv"
+    orderList.appendChild(newOrderDiv)
+
+    // Product restaurant name
     
 }

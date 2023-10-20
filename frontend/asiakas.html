@@ -42,11 +42,13 @@
   </div>
 </nav>
     <div class="restaurant-field">
-        <h1>Restaurants</h1>
+          <h1>Restaurants</h1>
+        
         <div class="user-restaurants" id="user-restaurants">
           
         </div>
         <div class="restaurant-dropdown" id="restaurant-info-dropdown">
+          <h1>Ravintolan tuotteet</h1>
           <div class="restaurant-information" id="restaurant-information">
 
           </div>
@@ -56,8 +58,33 @@
         </div>
         <div class="orderForum" id="orderForum" style="display: block;">
             <h1>Make an order</h1>
+            <div class="orderList" id="orderList">
+                Order List:
+                <div class="ordersDiv" id="ordersDiv">
+                  
+                </div>
+            </div>
+            <div class="orderForumItem">
+              <p>Name:</p>
+              <input type="text">
+            </div>
+            <div class="orderForumItem">
+              <p>Phone Number:</p>
+              <input type="text">
+              <p class="error-text"></p>
+            </div>
+            <div class="orderForumItem">
+              <p>Adress:</p>
+              <input type="text">
+            </div>
+            <button class="newRestaurantButton">
+              Order
+            </button>
         </div>
     </div>
+    <footer class="footer">
+      
+    </footer>
   <script type="module" src="asiakas/script.js"></script>
 </body>
 </html>
