@@ -42,7 +42,7 @@
 .restaurant-products{
     display: flex;
     width: 1000px;
-    height: 167px;
+    height: 180px;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;

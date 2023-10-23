@@ -50,13 +50,15 @@ getRestaurants()
 
 function openInfo(event){
     let buttonId = event.target.id
+    console.log(event.target)
     document.getElementById("restaurant-information").innerHTML = restaurants[buttonId].info
 
-    getProducts(restaurants[buttonId].id)
+    getProducts(restaurants[buttonId].id, event.target.id)
 }  
 
-async function getProducts(id){
+async function getProducts(id, arrayId){
     productions = []
+    let productCounter = 0
     document.getElementById("restaurant-products").innerHTML = null
     await fetch(`http://localhost:3001/api/products/from/${id}`)
         .then(response => response.json())
@@ -75,9 +77,14 @@ async function getProducts(id){
         newProductionName.innerHTML = element.name
         newProductionDiv.appendChild(newProductionName)
 
+        // Restaurant name
+        let newProductionRestaurantName = document.createElement("p")
+        newProductionRestaurantName.innerHTML = restaurants[arrayId].name
+        newProductionDiv.appendChild(newProductionRestaurantName)
+
         // Product price 
         let newProductionPrice = document.createElement("p")
-        newProductionPrice.innerHTML = element.price
+        newProductionPrice.innerHTML = (`Product price: ${element.price}`)
         newProductionDiv.appendChild(newProductionPrice)
 
         // Production ingredients
@@ -90,9 +97,11 @@ async function getProducts(id){
         let newProductionButton = document.createElement("button")
         newProductionButton.innerHTML = "Add"
         newProductionButton.className = "newRestaurantButton"
+        newProductionButton.id = productCounter
         newProductionButton.addEventListener("click", openOrderForum)
         newProductionDiv.appendChild(newProductionButton)
 
+        productCounter++
     })
     console.log(productions)
 }
@@ -107,5 +116,11 @@ function openOrderForum(event){
     orderList.appendChild(newOrderDiv)
 
     // Product restaurant name
-    
+    let newOrderName = document.createElement("h1")
+    newOrderName.innerHTML = productions[orderId].name
+    newOrderDiv.appendChild(newOrderName)
+
+    // Delete Button
+
+
 }
