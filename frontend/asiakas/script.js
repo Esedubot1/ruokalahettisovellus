@@ -1,5 +1,8 @@
 let restaurants = []
 let productions = []
+let orders = []
+
+let totalPrice = 0
 
 async function getRestaurants() {
     await fetch("http://localhost:3001/api/restaurants")
@@ -53,10 +56,10 @@ function openInfo(event){
     console.log(event.target)
     document.getElementById("restaurant-information").innerHTML = restaurants[buttonId].info
 
-    getProducts(restaurants[buttonId].id, event.target.id)
+    getProducts(restaurants[buttonId].id)
 }  
 
-async function getProducts(id, arrayId){
+async function getProducts(id){
     productions = []
     let productCounter = 0
     document.getElementById("restaurant-products").innerHTML = null
@@ -77,11 +80,6 @@ async function getProducts(id, arrayId){
         newProductionName.innerHTML = element.name
         newProductionDiv.appendChild(newProductionName)
 
-        // Restaurant name
-        let newProductionRestaurantName = document.createElement("p")
-        newProductionRestaurantName.innerHTML = restaurants[arrayId].name
-        newProductionDiv.appendChild(newProductionRestaurantName)
-
         // Product price 
         let newProductionPrice = document.createElement("p")
         newProductionPrice.innerHTML = (`Product price: ${element.price}`)
@@ -98,7 +96,7 @@ async function getProducts(id, arrayId){
         newProductionButton.innerHTML = "Add"
         newProductionButton.className = "newRestaurantButton"
         newProductionButton.id = productCounter
-        newProductionButton.addEventListener("click", openOrderForum)
+        newProductionButton.addEventListener("click", addOrder)
         newProductionDiv.appendChild(newProductionButton)
 
         productCounter++
@@ -106,21 +104,43 @@ async function getProducts(id, arrayId){
     console.log(productions)
 }
 
-function openOrderForum(event){
-    let orderList = document.getElementById("ordersDiv")
+function addOrder(event){
     let orderId = event.target.id
+    orders.push(productions[orderId])
+    console.log(orders)
 
-    // Div for order
-    let newOrderDiv = document.createElement("div")
-    newOrderDiv.classList = "newOrderDiv"
-    orderList.appendChild(newOrderDiv)
+    orderUpdate()
+}
 
-    // Product restaurant name
-    let newOrderName = document.createElement("h1")
-    newOrderName.innerHTML = productions[orderId].name
-    newOrderDiv.appendChild(newOrderName)
+function orderUpdate(){
+    let ordersDiv = document.getElementById("ordersDiv")
+    ordersDiv.innerHTML = null
+    orders.forEach(element => {
+        // Order Div
+        let newOrderDiv = document.createElement("div")
+        newOrderDiv.className = "newOrderDiv"
+        ordersDiv.appendChild(newOrderDiv)
 
-    // Delete Button
+        // Order Name
+        let newOrderName = document.createElement("h1")
+        newOrderName.className = "newOrderName"
+        newOrderName.innerHTML = element.name
+        newOrderDiv.appendChild(newOrderName)
 
+        // Price
+        let newOrderPrice = document.createElement("p")
+        newOrderPrice.innerHTML = element.price
+        newOrderDiv.appendChild(newOrderPrice)
 
+        // Ingredients
+        let newOrderIngredients = document.createElement("p")
+        newOrderIngredients.innerHTML = element.ingredients
+        newOrderDiv.appendChild(newOrderIngredients)
+
+        // Remove order Button
+        let newOrderRemoveButton = document.createElement("button")
+        newOrderRemoveButton.innerHTML = "Remove"
+        newOrderRemoveButton.className = "newOrderRemoveButton"
+        newOrderDiv.appendChild(newOrderRemoveButton)
+    })
 }

@@ -76,6 +76,15 @@
     border: solid 3px black;
 }
 
+.newOrderRemoveButton{
+  padding: 5px;
+  background-color: rgb(213, 76, 76);
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  border: solid 3px black;
+}
+
 .orderForum{
   display: grid;
   margin: 10px;
@@ -96,7 +105,7 @@
   height: 167px;
   display: flex;
   width: 1000px;
-  height: 167px;
+  height: 180px;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
