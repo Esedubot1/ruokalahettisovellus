@@ -106,13 +106,20 @@ async function getProducts(id){
 
 function addOrder(event){
     let orderId = event.target.id
+    let htmlPrice = document.getElementById("total-price")
     orders.push(productions[orderId])
+
+    totalPrice = totalPrice + productions[orderId].price
+    htmlPrice.innerHTML = totalPrice
+    console.log(totalPrice)
+
     console.log(orders)
 
     orderUpdate()
 }
 
 function orderUpdate(){
+    let orderCounter = 0
     let ordersDiv = document.getElementById("ordersDiv")
     ordersDiv.innerHTML = null
     orders.forEach(element => {
@@ -141,6 +148,28 @@ function orderUpdate(){
         let newOrderRemoveButton = document.createElement("button")
         newOrderRemoveButton.innerHTML = "Remove"
         newOrderRemoveButton.className = "newOrderRemoveButton"
+        newOrderRemoveButton.id = orderCounter
+        newOrderRemoveButton.addEventListener("click", deleteOrder)
         newOrderDiv.appendChild(newOrderRemoveButton)
+
+        orderCounter++
     })
+}
+
+function deleteOrder(event){
+    let orderId = event.target.id
+    let orderPrice = orders[orderId].price
+    let htmlPrice = document.getElementById("total-price")
+
+    totalPrice = totalPrice - orderPrice
+    htmlPrice.innerHTML = totalPrice
+    console.log(totalPrice)
+
+    orders.splice(orderId, 1)
+
+    orderUpdate()
+}
+
+function submitOrder(){
+    
 }

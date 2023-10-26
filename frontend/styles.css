@@ -85,6 +85,11 @@
   border: solid 3px black;
 }
 
+.newOrderRemoveButton:hover{
+  cursor: pointer;
+  background-color: white;
+}
+
 .orderForum{
   display: grid;
   margin: 10px;
