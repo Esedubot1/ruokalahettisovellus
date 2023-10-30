@@ -70,18 +70,18 @@
             </div>
             <div class="orderForumItem">
               <p>Name:</p>
-              <input type="text">
+              <input id="orderForumItemName" type="text">
             </div>
             <div class="orderForumItem">
               <p>Phone Number:</p>
-              <input type="text">
+              <input id="orderForumItemNumber" type="number">
               <p class="error-text"></p>
             </div>
             <div class="orderForumItem">
               <p>Adress:</p>
-              <input type="text">
+              <input id="orderForumItemAdress" type="text">
             </div>
-            <button class="newRestaurantButton">
+            <button onclick="submitOrder()" class="newRestaurantButton">
               Order
             </button>
         </div>
@@ -89,6 +89,6 @@
     <footer class="footer">
       
     </footer>
-  <script type="module" src="asiakas/script.js"></script>
+  <script src="asiakas/script.js"></script>
 </body>
 </html>

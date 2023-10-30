@@ -171,5 +171,12 @@ function deleteOrder(event){
 }
 
 function submitOrder(){
-    
+    // Check in subit folder is empty
+    let name = document.getElementById("orderForumItemName").value
+    let phoneNumber = document.getElementById("orderForumItemNumber").value
+    let adress = document.getElementById("orderForumItemAdress").value
+
+    if (name == "" || phoneNumber == null || adress == ""){
+        console.log("Fill out the form")
+    }
 }
