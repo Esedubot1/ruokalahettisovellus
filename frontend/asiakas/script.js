@@ -1,3 +1,8 @@
+/* Tokenin haku */
+const loggedUserJSON = window.localStorage.getItem('loggedUser')
+const user = JSON.parse(loggedUserJSON)
+const token = user.token
+
 let restaurants = []
 let productions = []
 let orders = []

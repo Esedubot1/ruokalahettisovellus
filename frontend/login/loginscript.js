@@ -1,14 +1,5 @@
 baseurl = "http://localhost:3001/api/login"
 
-/* let userUser = "userUser"
-let userPassword = "userPassword"
-
-let restaurantUser = "restaurantUser"
-let restaurantPassword = "restaurantPassword"
-
-let driverUser = "driverUser"
-let driverPassword = "driverPassword" */
-
 let mode = "restaurant"
 
 const errorText = document.getElementById("error-text")
@@ -20,7 +11,32 @@ async function submit(){
     console.log(inputUser)
     console.log(inputPassword)
 
-    try {
+    const res = await fetch(`http://localhost:3001/api/login/${mode}`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({username: inputUser, password: inputPassword})
+    })
+
+    if(res.status === 200 && mode === 'user') {
+      window.localStorage.setItem('loggedUser', JSON.stringify(res))
+      window.location.href = 'asiakas.html'
+    }
+    if(res.status === 200 && mode === 'restaurant') {
+      window.localStorage.setItem('loggedRestaurant', JSON.stringify(res))
+      window.location.href = 'ravintola.html'
+    }
+    if(res.status === 200 && mode === 'deliverer') {
+      window.localStorage.setItem('loggedDeliverer', JSON.stringify(res))
+      window.location.href = 'kuski.html'
+    }
+    if(res.status !== 200) {
+      errorText.style.display = "block"
+      setTimeout(() => {
+        errorText.style.display = "none"
+      }, 2000)
+    }
+
+    /* try {
         let user = await fetch(`http://localhost:3001/api/login/${mode}`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -34,7 +50,7 @@ async function submit(){
         setTimeout(() => {
             errorText.style.display = "none"
         }, 2000)
-    }
+    } */
     
     /* if (inputUser == userUser && inputPassword == userPassword) {
         location.href = "asiakas.html"
