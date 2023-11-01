@@ -58,15 +58,25 @@
 
   
   .userOrders{
-    display: grid;
-    justify-content: center;
+    display: flex;
     border-radius: 10px;
     border: solid 7px black;
     margin: 10px;
 
-    height: 167px;
-    display: flex;
     width: 1000px;
+    height: 180px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+  .userProducts{
+    display: flex;
+    border-radius: 10px;
+    border: solid 7px black;
+    margin: 10px;
+
+    width: 700px;
     height: 180px;
     overflow-x: auto;
     overflow-y: hidden;
