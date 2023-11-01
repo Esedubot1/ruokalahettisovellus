@@ -35,7 +35,7 @@ orderRouter.get('/:id', async (req, res) => {
 })
 
 /* Hakee kaikki käyttäjän tilaukset */
-orderRouter.get('/myorder', async (req, res) => {
+orderRouter.get('/from/thisuser', async (req, res) => {
   try {
     const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
     if (!decodedToken.id) {
@@ -46,7 +46,7 @@ orderRouter.get('/myorder', async (req, res) => {
 
     const orders = await Order.find({})
 
-    const filtered = orders.filter((e) => e.recipient === user)
+    const filtered = orders.filter((e) => e.recipient === user.id)
 
     res.json(filtered)
   } catch (error) {
@@ -55,7 +55,7 @@ orderRouter.get('/myorder', async (req, res) => {
 })
 
 /* Hakee kaikki ravintolan tilaukset */
-orderRouter.get('/thisrestaurant', async (req, res) => {
+orderRouter.get('/from/thisrestaurant', async (req, res) => {
   try {
     const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
     if (!decodedToken.id) {
@@ -66,7 +66,7 @@ orderRouter.get('/thisrestaurant', async (req, res) => {
 
     const orders = await Order.find({})
 
-    const filtered = orders.filter((e) => e.restaurant === restaurant)
+    const filtered = orders.filter((e) => e.restaurant === restaurant.id)
 
     res.json(filtered)
   } catch (error) {
