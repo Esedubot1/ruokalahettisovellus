@@ -21,7 +21,8 @@ async function submit(){
       switch (mode) {
         case 'user':
           window.localStorage.setItem('loggedUser', JSON.stringify(res))
-          window.location.href = 'asiakas.html'
+          console.log(res.token)
+          /* window.location.href = 'asiakas.html' */
           break
         case 'restaurant':
           window.localStorage.setItem('loggedRestaurant', JSON.stringify(res))

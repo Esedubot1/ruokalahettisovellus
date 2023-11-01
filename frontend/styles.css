@@ -31,6 +31,51 @@
 
 /* Asiakas */
 
+  /* Orders */
+  .orderField{
+    margin-top: 100px;
+    display: grid;
+    justify-content: center;
+  }
+
+  .orderField-item1{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .order-refresh-button{
+    font-style: italic;
+    font-weight: bold;
+    background-color: rgb(133, 173, 133);
+    padding: 6px;
+    border: solid 7px black;
+    border-radius: 7px;
+  }
+
+  .order-refresh-button:hover{
+    cursor: pointer;
+  }
+
+  
+  .userOrders{
+    display: grid;
+    justify-content: center;
+    border-radius: 10px;
+    border: solid 7px black;
+    margin: 10px;
+
+    height: 167px;
+    display: flex;
+    width: 1000px;
+    height: 180px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+  
+
+
+
 .restaurant-dropdown{
     left: 0;
     background-color: white;

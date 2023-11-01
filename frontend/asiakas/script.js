@@ -2,6 +2,7 @@
 const loggedUserJSON = window.localStorage.getItem('loggedUser')
 const user = JSON.parse(loggedUserJSON)
 const token = user.token
+console.log("token: " + token)
 
 let restaurants = []
 let productions = []
@@ -185,3 +186,17 @@ function submitOrder(){
         console.log("Fill out the form")
     }
 }
+
+
+// Orders Page Functions 
+let userOrders = []
+
+async function getOrders() {
+    await fetch("http://localhost:3001/api/orders/from/thisuser", {headers: {"Authorization": "Bearer " + token}})
+        .then(response => response.json())
+        .then(data => data.forEach(element => {
+            userOrders.push(element)
+        }))
+    console.log(userOrders)
+}
+

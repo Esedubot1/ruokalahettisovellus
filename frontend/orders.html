@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="nav-bar-container">
+        <header class="cd__intro">
+          <h1> Responsive Navbar with Logo Example </h1>
+          <p> Responsive Navbar with Logo </p>
+        </header>
+          <main class="cd__main">
+          <nav id="navbar" class="">
+              <div class="nav-wrapper">
+                <!-- Navbar Logo -->
+                <div class="logo">
+                  <!-- Logo Placeholder for Illustration -->
+                  <a href="asiakas.html"><img width="95px" height="auto" src="images/logo.jpg"></a>
+                </div>
+                <!-- Navbar Links -->
+                <ul id="menu">
+                  <li><a href="asiakas.html">Home</a></a></li>
+                  <li><a href="orders.html">Orders</a></li>
+                  <li><a href="#about">Information</a></li>
+                  <li><a href="#index.html">Logout</a></li>
+                </ul>
+              </div>
+          </nav>
+          </main>
+      </div>
+    
+      <div class="orderField" id="orderField">
+        <div class="orderField-item1">
+            <h1>Orders</h1>
+            <button onclick="getOrders()" class="order-refresh-button" id="order-refresh-button">Refresh</button>
+        </div>
+        <div class="userOrders" id="userOrders">
+
+        </div>
+      </div>
+</body>
+    <script src="asiakas/script.js"></script>
+</html>
