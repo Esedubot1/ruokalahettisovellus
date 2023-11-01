@@ -1,6 +1,6 @@
 baseurl = "http://localhost:3001/api/login"
 
-let mode = "restaurant"
+let mode = "user"
 
 const errorText = document.getElementById("error-text")
 

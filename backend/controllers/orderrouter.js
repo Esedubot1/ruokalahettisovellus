@@ -49,6 +49,25 @@ orderRouter.get('/from/:restaurant', async (req, res) => {
   }
 })
 
+orderRouter.get('/thisrestaurant', async (req, res) => {
+  try {
+    const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
+    if (!decodedToken.id) {
+      return res.status(401).json({error: 'invalid token'})
+    }
+
+    const restaurant = await Restaurant.findById(decodedToken.id)
+
+    const orders = await Order.find({})
+
+    const filtered = orders.filter((e) => e.restaurant === restaurant)
+
+    res.json(filtered)
+  } catch (error) {
+    console.log(error.message)
+  }
+})
+
 /* Luo uuden tilauksen. POST requestin tulee olla JSON-muodossa ja sisältää ravintolan ID sekä tuotteet joita sieltä tilataan */
 /* Kentät:
     recipient: tilauksen vastaanottaja (täyttyy automaattisesti tokenin perusteella),
