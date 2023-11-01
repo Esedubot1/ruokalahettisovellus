@@ -34,14 +34,19 @@ orderRouter.get('/:id', async (req, res) => {
   }
 })
 
-/* Hakee kaikki tilaukset ravintolan ID:n perusteella */
-orderRouter.get('/from/:restaurant', async (req, res) => {
-  const restaurant = req.params.restaurant
-
+/* Hakee kaikki käyttäjän tilaukset */
+orderRouter.get('/myorder', async (req, res) => {
   try {
+    const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
+    if (!decodedToken.id) {
+      return res.status(401).json({error: 'invalid token'})
+    }
+
+    const user = await User.findById(decodedToken.id)
+
     const orders = await Order.find({})
 
-    const filtered = orders.filter((e) => e.restaurant === restaurant)
+    const filtered = orders.filter((e) => e.recipient === user)
 
     res.json(filtered)
   } catch (error) {
@@ -49,6 +54,7 @@ orderRouter.get('/from/:restaurant', async (req, res) => {
   }
 })
 
+/* Hakee kaikki ravintolan tilaukset */
 orderRouter.get('/thisrestaurant', async (req, res) => {
   try {
     const decodedToken = jwt.verify(getTokenFrom(req), process.env.SECRET)
