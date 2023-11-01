@@ -17,19 +17,21 @@ async function submit(){
       body: JSON.stringify({username: inputUser, password: inputPassword})
     })
 
+    const user = await res.json()
+
     if (res.status === 200) {
       switch (mode) {
         case 'user':
-          window.localStorage.setItem('loggedUser', JSON.stringify(res))
+          window.localStorage.setItem('loggedUser', JSON.stringify(user))
           console.log(res.token)
-          /* window.location.href = 'asiakas.html' */
+          window.location.href = 'asiakas.html'
           break
         case 'restaurant':
-          window.localStorage.setItem('loggedRestaurant', JSON.stringify(res))
+          window.localStorage.setItem('loggedRestaurant', JSON.stringify(user))
           window.location.href = 'ravintola.html'
           break
         case 'deliverer':
-          window.localStorage.setItem('loggedDeliverer', JSON.stringify(res))
+          window.localStorage.setItem('loggedDeliverer', JSON.stringify(user))
           window.location.href = 'kuski.html'
           break
       }
