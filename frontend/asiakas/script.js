@@ -192,11 +192,41 @@ function submitOrder(){
 let userOrders = []
 
 async function getOrders() {
+    let divCounter = 0
+    userOrders = []
+    document.getElementById("userOrders").innerHTML = null
     await fetch("http://localhost:3001/api/orders/from/thisuser", {headers: {"Authorization": "Bearer " + token}})
         .then(response => response.json())
         .then(data => data.forEach(element => {
             userOrders.push(element)
         }))
     console.log(userOrders)
+
+    userOrders.forEach(element => {
+        // Creates Order Div for Order page
+        let newUserOrderDiv = document.createElement("div")
+        newUserOrderDiv.className = "newOrderDiv"
+        document.getElementById("userOrders").appendChild(newUserOrderDiv)
+
+        // Name of the div
+        let newUserOrderName = document.createElement("h1")
+        newUserOrderName.innerHTML = ("Order " + divCounter)
+        newUserOrderDiv.appendChild(newUserOrderName)
+
+        // Show Order button
+        let newUserOrderButton = document.createElement("button")
+        newUserOrderButton.className = "newRestaurantButton"
+        newUserOrderButton.innerHTML = "Show"
+        newUserOrderButton.addEventListener("click", showOrder())
+        newUserOrderDiv.appendChild(newUserOrderButton)
+
+        divCounter++
+    })
+
+    
+}
+
+function showOrder(){
+    
 }
 
