@@ -21,6 +21,7 @@ async function getRestaurants() {
     createDivs()
 }
 
+// Creates the divs for Restaurants
 function createDivs() {
     let restaurantCounter = 0
     restaurants.forEach(element => {
@@ -74,7 +75,9 @@ async function getProducts(id){
         .then(data => data.forEach(element => {
             productions.push(element)
         }))
-
+    let res = await fetch(`http://localhost:3001/api/restaurants/${id}`)
+    let restaurantName = await res.json()
+    document.getElementById("restaurant-name").innerHTML = ("From: " + restaurantName.name)
     productions.forEach(element => {
         //Product div
         let newProductionDiv = document.createElement("div")
@@ -124,11 +127,11 @@ function addOrder(event){
     orderUpdate()
 }
 
-function orderUpdate(){
+async function orderUpdate(){
     let orderCounter = 0
     let ordersDiv = document.getElementById("ordersDiv")
     ordersDiv.innerHTML = null
-    orders.forEach(element => {
+    for (let i = 0; i < orders.length; i++){
         // Order Div
         let newOrderDiv = document.createElement("div")
         newOrderDiv.className = "newOrderDiv"
@@ -137,17 +140,24 @@ function orderUpdate(){
         // Order Name
         let newOrderName = document.createElement("h1")
         newOrderName.className = "newOrderName"
-        newOrderName.innerHTML = element.name
+        newOrderName.innerHTML = orders[i].name
         newOrderDiv.appendChild(newOrderName)
+
+        // Product Restaurant Name 
+        let newOrderRestaurantName = document.createElement("p")
+        let res = await fetch(`http://localhost:3001/api/restaurants/${orders[i].restaurant}`)
+        let orderRestaurantName = await res.json()
+        newOrderRestaurantName.innerHTML = orderRestaurantName.name
+        newOrderDiv.appendChild(newOrderRestaurantName)
 
         // Price
         let newOrderPrice = document.createElement("p")
-        newOrderPrice.innerHTML = element.price
+        newOrderPrice.innerHTML = orders[i].price
         newOrderDiv.appendChild(newOrderPrice)
 
         // Ingredients
         let newOrderIngredients = document.createElement("p")
-        newOrderIngredients.innerHTML = element.ingredients
+        newOrderIngredients.innerHTML = orders[i].ingredients
         newOrderDiv.appendChild(newOrderIngredients)
 
         // Remove order Button
@@ -159,7 +169,7 @@ function orderUpdate(){
         newOrderDiv.appendChild(newOrderRemoveButton)
 
         orderCounter++
-    })
+    }
 }
 
 function deleteOrder(event){
@@ -181,6 +191,18 @@ function submitOrder(){
     let name = document.getElementById("orderForumItemName").value
     let phoneNumber = document.getElementById("orderForumItemNumber").value
     let adress = document.getElementById("orderForumItemAdress").value
+    
+
+    if (orders == []){
+        console.log("Order something")
+    }
+
+    orders.forEach(element => {
+        let exampleRestaurant = orders[0].restaurant
+        if (element.restaurant != exampleRestaurant){
+            console.log("Please, order from one restaurant at time")
+        }
+    })
 
     if (name == "" || phoneNumber == null || adress == ""){
         console.log("Fill out the form")
@@ -190,11 +212,8 @@ function submitOrder(){
 
 // Orders Page Functions 
 let userOrders = []
-let restaurantNames = []
-
 
 async function getOrders() {
-    let divCounter = 0
     userOrders = []
     document.getElementById("userOrders").innerHTML = null
     await fetch("http://localhost:3001/api/orders/from/thisuser", {headers: {"Authorization": "Bearer " + token}})
@@ -204,33 +223,8 @@ async function getOrders() {
         }))
     console.log(userOrders)
 
-    /* userOrders.forEach(element => {
-        // Creates Order Div for Order page
-        let newUserOrderDiv = document.createElement("div")
-        newUserOrderDiv.className = "newOrderDiv"
-        document.getElementById("userOrders").appendChild(newUserOrderDiv)
-
-        // Name of the div
-        let newUserOrderName = document.createElement("h1")
-        newUserOrderName.innerHTML = ("Order " + (divCounter + 1))
-        newUserOrderDiv.appendChild(newUserOrderName)
-
-        // Restaurant name
-        let newUserOrderRestaurant = document.createElement("p")
-        let restaurantName = fetch(`http://localhost:3001/api/restaurants/${userOrders[divCounter]}`)
-        console.log(restaurantName)
-
-        // Show Order button
-        let newUserOrderButton = document.createElement("button")
-        newUserOrderButton.className = "newRestaurantButton"
-        newUserOrderButton.innerHTML = "Show"
-        newUserOrderButton.addEventListener("click", showOrder())
-        newUserOrderDiv.appendChild(newUserOrderButton)
-
-        divCounter++
-    }) */
-
     for (let i = 0; i < userOrders.length; i++) {
+        console.log("Order number: " + (i + 1))
         // Creates Order Div for Order page
         let newUserOrderDiv = document.createElement("div")
         newUserOrderDiv.className = "newOrderDiv"
@@ -238,28 +232,78 @@ async function getOrders() {
 
         // Name of the div
         let newUserOrderName = document.createElement("h1")
-        newUserOrderName.innerHTML = ("Order " + (divCounter + 1))
+        newUserOrderName.innerHTML = ("Order " + (i + 1))
         newUserOrderDiv.appendChild(newUserOrderName)
 
         // Restaurant name
         let newUserOrderRestaurant = document.createElement("p")
-        let restaurant = await fetch(`http://localhost:3001/api/restaurants/${userOrders[i]}`)
-        console.log("lol" + restaurant.name)
+        let res = await fetch(`http://localhost:3001/api/restaurants/${userOrders[i].restaurant}`)
+        let restaurant = await res.json()
+        console.log(restaurant.name)
+        newUserOrderRestaurant.innerHTML = (restaurant.name)
+        newUserOrderDiv.appendChild(newUserOrderRestaurant)
+
+        // Status
+        let newUserOrderStatus = document.createElement("p")
+        let currentStatus = userOrders[i].status
+        if (currentStatus == 0){
+            newUserOrderStatus.innerHTML = "Status: Grilling"
+        } else if (currentStatus == 1){
+            newUserOrderStatus.innerHTML = "Status: Done"
+        } else if (currentStatus == 2){
+            newUserOrderStatus.innerHTML = "Status: Delivering"
+        } else if (currentStatus == 3){
+            newUserOrderStatus.innerHTML = "Status: Delivered!"
+        }
+
+        newUserOrderDiv.appendChild(newUserOrderStatus)
+        console.log("Staus: " + currentStatus)
 
         // Show Order button
         let newUserOrderButton = document.createElement("button")
+        newUserOrderButton.id = i
         newUserOrderButton.className = "newRestaurantButton"
         newUserOrderButton.innerHTML = "Show"
-        newUserOrderButton.addEventListener("click", showOrder())
+        newUserOrderButton.addEventListener("click", showOrder)
         newUserOrderDiv.appendChild(newUserOrderButton)
 
-        divCounter++
+        console.log("---")
     }
-
-    
 }
 
-function showOrder(){
 
+let userOrderProducts = []
+
+async function showOrder(event){
+    userOrderProducts = []
+    document.getElementById("userProducts").innerHTML = null
+    let userOrderId = event.target.id
+    
+    for (let i = 0; i < userOrders[userOrderId].products.length; i++){
+        let res = await fetch(`http://localhost:3001/api/products/${userOrders[userOrderId].products[i]}`)
+        let product = await res.json()
+        console.log(product)
+
+        // Product div
+        let newOrderProductDiv = document.createElement("div")
+        newOrderProductDiv.className = "newOrderDiv"
+        document.getElementById("userProducts").appendChild(newOrderProductDiv)
+
+        // Product Name
+        let newOrderProductName = document.createElement("h1")
+        newOrderProductName.innerHTML = product.name
+        newOrderProductDiv.appendChild(newOrderProductName)
+
+        // Product price
+        let newOrderProductPrice = document.createElement("p")
+        newOrderProductPrice.innerHTML = ("Price: " + product.price)
+        newOrderProductDiv.appendChild(newOrderProductPrice)
+
+        // Ingredients
+        let newOrderProductIngredients = document.createElement("p")
+        newOrderProductIngredients.innerHTML = product.ingredients
+        newOrderProductDiv.appendChild(newOrderProductIngredients)
+
+    }
 }
 
