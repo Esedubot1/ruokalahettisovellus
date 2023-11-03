@@ -28,6 +28,36 @@
     font-size: 20px;
 }
 /* -------------------------- */
+/* Ravintola */
+.restaurant-header{
+  margin-top: 50px;
+  display: grid;
+  justify-content: center;
+}
+
+.restaurant-order-field{
+  margin-top: 100px;
+  display: grid;
+  justify-content: center;
+}
+
+.restaurant-orders{
+  display: flex;
+  border-radius: 10px;
+  border: solid 7px black;
+  margin: 10px;
+
+  width: 1000px;
+  height: 180px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.restaurantOrderItem1{
+  display: flex;
+  justify-content: space-between;
+}
 
 /* Asiakas */
 

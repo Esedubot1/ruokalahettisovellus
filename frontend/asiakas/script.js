@@ -190,6 +190,8 @@ function submitOrder(){
 
 // Orders Page Functions 
 let userOrders = []
+let restaurantNames = []
+
 
 async function getOrders() {
     let divCounter = 0
@@ -202,7 +204,7 @@ async function getOrders() {
         }))
     console.log(userOrders)
 
-    userOrders.forEach(element => {
+    /* userOrders.forEach(element => {
         // Creates Order Div for Order page
         let newUserOrderDiv = document.createElement("div")
         newUserOrderDiv.className = "newOrderDiv"
@@ -210,8 +212,13 @@ async function getOrders() {
 
         // Name of the div
         let newUserOrderName = document.createElement("h1")
-        newUserOrderName.innerHTML = ("Order " + divCounter)
+        newUserOrderName.innerHTML = ("Order " + (divCounter + 1))
         newUserOrderDiv.appendChild(newUserOrderName)
+
+        // Restaurant name
+        let newUserOrderRestaurant = document.createElement("p")
+        let restaurantName = fetch(`http://localhost:3001/api/restaurants/${userOrders[divCounter]}`)
+        console.log(restaurantName)
 
         // Show Order button
         let newUserOrderButton = document.createElement("button")
@@ -221,12 +228,38 @@ async function getOrders() {
         newUserOrderDiv.appendChild(newUserOrderButton)
 
         divCounter++
-    })
+    }) */
+
+    for (let i = 0; i < userOrders.length; i++) {
+        // Creates Order Div for Order page
+        let newUserOrderDiv = document.createElement("div")
+        newUserOrderDiv.className = "newOrderDiv"
+        document.getElementById("userOrders").appendChild(newUserOrderDiv)
+
+        // Name of the div
+        let newUserOrderName = document.createElement("h1")
+        newUserOrderName.innerHTML = ("Order " + (divCounter + 1))
+        newUserOrderDiv.appendChild(newUserOrderName)
+
+        // Restaurant name
+        let newUserOrderRestaurant = document.createElement("p")
+        let restaurant = await fetch(`http://localhost:3001/api/restaurants/${userOrders[i]}`)
+        console.log("lol" + restaurant.name)
+
+        // Show Order button
+        let newUserOrderButton = document.createElement("button")
+        newUserOrderButton.className = "newRestaurantButton"
+        newUserOrderButton.innerHTML = "Show"
+        newUserOrderButton.addEventListener("click", showOrder())
+        newUserOrderDiv.appendChild(newUserOrderButton)
+
+        divCounter++
+    }
 
     
 }
 
 function showOrder(){
-    
+
 }
 
