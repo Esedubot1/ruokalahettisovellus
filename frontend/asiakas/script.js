@@ -196,7 +196,6 @@ async function submitOrder(){
     let productIDs = []
     
     orders.forEach(element => {
-        console.log("restaurant:" + exampleRestaurant)
         if (element.restaurant != exampleRestaurant) {
             console.log("Please, order from one restaurant at time")
             productIDs = []
@@ -205,13 +204,15 @@ async function submitOrder(){
             console.log("Order something")
             productIDs = []
             return
-        } else if (name == "" || phoneNumber == null || adress == ""){
-            console.log("Fill out the form")
-            productIDs = []
-            return
         }
-        productIDs.push(element)
+        productIDs.push(element.id)
     })
+
+    console.log(productIDs)
+
+    if(productIDs.length === 0) {
+      return
+    }
 
     let res = await fetch(`http://localhost:3001/api/orders`, {
       method: "POST",
