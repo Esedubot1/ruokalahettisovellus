@@ -192,21 +192,18 @@ function submitOrder(){
     let phoneNumber = document.getElementById("orderForumItemNumber").value
     let adress = document.getElementById("orderForumItemAdress").value
     
-
-    if (orders == []){
-        console.log("Order something")
-    }
-
     orders.forEach(element => {
         let exampleRestaurant = orders[0].restaurant
-        if (element.restaurant != exampleRestaurant){
+        if (element.restaurant != exampleRestaurant) {
             console.log("Please, order from one restaurant at time")
+        } else if (orders[0] == null){
+            console.log("Order sometinhg")
+        } else if (name == "" || phoneNumber == null || adress == ""){
+            console.log("Fill out the form")
+        } else {
+            
         }
     })
-
-    if (name == "" || phoneNumber == null || adress == ""){
-        console.log("Fill out the form")
-    }
 }
 
 
@@ -247,7 +244,7 @@ async function getOrders() {
         let newUserOrderStatus = document.createElement("p")
         let currentStatus = userOrders[i].status
         if (currentStatus == 0){
-            newUserOrderStatus.innerHTML = "Status: Grilling"
+            newUserOrderStatus.innerHTML = "Status: Cooking"
         } else if (currentStatus == 1){
             newUserOrderStatus.innerHTML = "Status: Done"
         } else if (currentStatus == 2){
