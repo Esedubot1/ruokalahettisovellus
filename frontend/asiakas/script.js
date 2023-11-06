@@ -186,24 +186,40 @@ function deleteOrder(event){
     orderUpdate()
 }
 
-function submitOrder(){
+async function submitOrder(){
     // Check in subit folder is empty
     let name = document.getElementById("orderForumItemName").value
     let phoneNumber = document.getElementById("orderForumItemNumber").value
     let adress = document.getElementById("orderForumItemAdress").value
+    let exampleRestaurant = orders[0].restaurant
+
+    let productIDs = []
     
     orders.forEach(element => {
-        let exampleRestaurant = orders[0].restaurant
+        console.log("restaurant:" + exampleRestaurant)
         if (element.restaurant != exampleRestaurant) {
             console.log("Please, order from one restaurant at time")
+            productIDs = []
+            return
         } else if (orders[0] == null){
-            console.log("Order sometinhg")
+            console.log("Order something")
+            productIDs = []
+            return
         } else if (name == "" || phoneNumber == null || adress == ""){
             console.log("Fill out the form")
-        } else {
-            
+            productIDs = []
+            return
         }
+        productIDs.push(element)
     })
+
+    let res = await fetch(`http://localhost:3001/api/orders`, {
+      method: "POST",
+      body: JSON.stringify({restaurant: exampleRestaurant, products: productIDs}),
+      headers: {"Content-Type": "application/json", "Authorization": "Bearer " + token}
+    })
+
+    productIDs = []
 }
 
 
