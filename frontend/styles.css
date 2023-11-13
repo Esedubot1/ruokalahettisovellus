@@ -58,6 +58,18 @@
   display: flex;
   justify-content: space-between;
 }
+.restaurant-order-productions{
+  display: flex;
+  border-radius: 10px;
+  border: solid 7px black;
+  margin: 10px;
+
+  width: 1000px;
+  height: 180px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
 
 /* Asiakas */
 
