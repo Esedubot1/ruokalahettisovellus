@@ -30,7 +30,7 @@ loginRouter.post('/user', async (req, res) => {
 
   res
     .status(200)
-    .send({token, username: user.username})
+    .send({token, username: user.username, id: user._id})
 })
 
 /* Kirjautuu sisään ravintolana */
@@ -57,7 +57,7 @@ loginRouter.post('/restaurant', async (req, res) => {
 
   res
     .status(200)
-    .send({token, username: user.username})
+    .send({token, username: user.username, id: user._id})
 })
 
 /* Kirjautuu sisään kuljettajana */
@@ -85,7 +85,7 @@ loginRouter.post('/deliverer', async (req, res) => {
 
   res
     .status(200)
-    .send({token, username: user.username})
+    .send({token, username: user.username, id: user._id})
 })
 
 module.exports = loginRouter

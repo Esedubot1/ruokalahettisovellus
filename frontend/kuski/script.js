@@ -5,7 +5,8 @@ const token = deliverer.token
 
 async function getOrders() {
   const orders = []
-  document.getElementById("orders").innerHTML = null
+  document.getElementById("allOrders").innerHTML = null
+  document.getElementById("myOrders").innerHTML = null
   await fetch("http://localhost:3001/api/orders/")
       .then(response => response.json())
       .then(data => data.forEach(element => {
@@ -18,7 +19,6 @@ async function getOrders() {
       // Creates Order Div for Order page
       let newOrderDiv = document.createElement("div")
       newOrderDiv.className = "newOrderDiv"
-      document.getElementById("orders").appendChild(newOrderDiv)
 
       // Name of the div
       let newOrderName = document.createElement("h1")
@@ -49,16 +49,43 @@ async function getOrders() {
       newOrderDiv.appendChild(newOrderStatus)
       console.log("Staus: " + currentStatus)
 
-      // Show Order button
-      /* let newOrderButton = document.createElement("button")
-      newOrderButton.id = i
-      newOrderButton.className = "newRestaurantButton"
-      newOrderButton.innerHTML = "Show"
-      newOrderButton.addEventListener("click", showOrder)
-      newOrderDiv.appendChild(newOrderButton) */
+      // Deliver button
+      let deliverButton = document.createElement("button")
+      deliverButton.id = i
+      deliverButton.className = "newRestaurantButton"
+      deliverButton.innerHTML = "Deliver"
+      deliverButton.addEventListener("click", () => updateOrder(orders[i].id))
+      if(orders[i].status === 1) {
+        newOrderDiv.appendChild(newOrderButton)
+      }
+
+      // Done button
+      let doneButton = document.createElement("button")
+      doneButton.id = i
+      doneButton.className = "newRestaurantButton"
+      doneButton.innerHTML = "Mark as delivered"
+      doneButton.addEventListener("click", () => updateOrder(orders[i].id))
+      if(orders[i].status === 2 && orders[i].deliverer === deliverer.id) {
+        newOrderDiv.appendChild(doneButton)
+      }
+
+      if(orders[i].deliverer === deliverer.id) {
+        document.getElementById("myOrders").appendChild(newOrderDiv)
+        newOrderName.innerHTML = ("Order " + document.getElementById("myOrders").childElementCount)
+      } else if(orders[i].status < 2) {
+        document.getElementById("allOrders").appendChild(newOrderDiv)
+        newOrderName.innerHTML = ("Order " + document.getElementById("allOrders").childElementCount)
+      }
 
       console.log("---")
   }
 }
 
-document.querySelector('#xdbutton').onclick=(() => {getOrders()})
+async function updateOrder(order) {
+    await fetch(`http://localhost:3001/api/orders/${order}`, {
+        method: "PUT",
+        headers: {"Authorization": "Bearer " + token}
+    })
+}
+
+document.querySelector('#refreshButton').addEventListener("click", getOrders)

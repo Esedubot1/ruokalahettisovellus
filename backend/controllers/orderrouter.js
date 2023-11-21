@@ -145,9 +145,9 @@ orderRouter.put('/:id', async (req, res) => {
         return res.status(401).json({error: 'order already has a deliverer'})
       }
     } else if (order.status === 2) {
-      if (deliverer && !order.deliverer) {
+      if (deliverer && order.deliverer === deliverer.id) {
         order.deliverer = deliverer.id
-        order.status = 2
+        order.status = 3
       } else if (deliverer) {
         return res.status(401).json({error: 'order already has a deliverer'})
       }
