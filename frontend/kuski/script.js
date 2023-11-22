@@ -53,10 +53,10 @@ async function getOrders() {
       let deliverButton = document.createElement("button")
       deliverButton.id = i
       deliverButton.className = "newRestaurantButton"
-      deliverButton.innerHTML = "Deliver"
+      deliverButton.innerHTML = "Take delivery"
       deliverButton.addEventListener("click", () => updateOrder(orders[i].id))
       if(orders[i].status === 1) {
-        newOrderDiv.appendChild(newOrderButton)
+        newOrderDiv.appendChild(deliverButton)
       }
 
       // Done button
