@@ -77,6 +77,7 @@ orderRouter.get('/from/thisrestaurant', async (req, res) => {
 /* Luo uuden tilauksen. POST requestin tulee olla JSON-muodossa ja sisältää ravintolan ID sekä tuotteet joita sieltä tilataan */
 /* Kentät:
     recipient: tilauksen vastaanottaja (täyttyy automaattisesti tokenin perusteella),
+    address: tilauksen osoite (minne se toimitetaan),
     restaurant: ravintolan ID,
     products: array jossa tuotteiden ID:itä
     status: tilauksen status (0 = tilattu, 1 = ravintola on merkannut valmiiksi, 2 = kuljettaja on merkannut haetuksi, 3 = tilaaja on merkannut toimitetuksi)
@@ -94,6 +95,7 @@ orderRouter.post('/', async (req, res) => {
 
     const order = new Order({
       recipient: user.id,
+      address: body.address,
       restaurant: body.restaurant,
       products: body.products,
       status: 0
