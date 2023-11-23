@@ -188,9 +188,7 @@ function deleteOrder(event){
 
 async function submitOrder(){
     // Check in subit folder is empty
-    let name = document.getElementById("orderForumItemName").value
-    let phoneNumber = document.getElementById("orderForumItemNumber").value
-    let adress = document.getElementById("orderForumItemAdress").value
+    let address = document.getElementById("orderForumItemAddress").value
     let exampleRestaurant = orders[0].restaurant
 
     let productIDs = []
@@ -216,7 +214,7 @@ async function submitOrder(){
 
     let res = await fetch(`http://localhost:3001/api/orders`, {
       method: "POST",
-      body: JSON.stringify({restaurant: exampleRestaurant, products: productIDs}),
+      body: JSON.stringify({restaurant: exampleRestaurant, address: address, products: productIDs}),
       headers: {"Content-Type": "application/json", "Authorization": "Bearer " + token}
     })
 

@@ -33,6 +33,13 @@ async function getOrders() {
       newOrderRestaurant.innerHTML = (restaurant.name)
       newOrderDiv.appendChild(newOrderRestaurant)
 
+      // Address
+      let newOrderAddress = document.createElement("p")
+      newOrderAddress.innerHTML = "Delivery address: " + orders[i].address
+
+      newOrderDiv.appendChild(newOrderAddress)
+      console.log("Address: " + orders[i].address)
+
       // Status
       let newOrderStatus = document.createElement("p")
       let currentStatus = orders[i].status
