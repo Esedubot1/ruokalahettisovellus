@@ -209,7 +209,14 @@ async function submitOrder(){
     console.log(productIDs)
 
     if(productIDs.length === 0) {
-      return
+        return
+    }
+    if(address === '') {
+        document.getElementById("error-text").innerHTML = 'Address is required.'
+        setTimeout(() => {
+            document.getElementById("error-text").innerHTML = null
+        }, 2000)
+        return
     }
 
     let res = await fetch(`http://localhost:3001/api/orders`, {
