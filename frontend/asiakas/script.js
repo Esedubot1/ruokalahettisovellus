@@ -1,6 +1,9 @@
 /* Tokenin haku */
 const loggedUserJSON = window.localStorage.getItem('loggedUser')
 const user = JSON.parse(loggedUserJSON)
+if (user === null) {
+    window.location.href = "index.html"
+}
 const token = user.token
 console.log("token: " + token)
 

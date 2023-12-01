@@ -1,6 +1,9 @@
  /* Tokenin haku */
 const loggedDelivererJSON = window.localStorage.getItem('loggedDeliverer')
 const deliverer = JSON.parse(loggedDelivererJSON)
+if (deliverer === null) {
+  window.location.href = "index.html"
+}
 const token = deliverer.token
 
 async function getOrders() {

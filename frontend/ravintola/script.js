@@ -1,6 +1,9 @@
  /* Tokenin haku */
  const loggedRestaurantJSON = window.localStorage.getItem('loggedRestaurant')
  const restaurant = JSON.parse(loggedRestaurantJSON)
+ if (restaurant === null) {
+    window.location.href = "index.html"
+}
  const token = restaurant.token
 
 let orders = []
