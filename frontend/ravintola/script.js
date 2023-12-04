@@ -10,7 +10,7 @@ let orders = []
 
 async function getRestaurantOrders() {
     orders = []
-    await fetch(`http://localhost:3001/api/orders/from/thisrestaurant`, {headers: {"Authorization": "Bearer " + token}})
+    await fetch(`http://localhost:${PORT}/api/orders/from/thisrestaurant`, {headers: {"Authorization": "Bearer " + token}})
         .then(response => response.json())
         .then(data => data.forEach(element => {
             orders.push(element)
@@ -28,7 +28,7 @@ async function createDivs(){
     // Suosittelen käyttämään for looppia tätä varten.
     // Koodi millä saa ravintolan nimen backendistä on seuraava
 
-    // let res = await fetch(`http://localhost:3001/api/restaurants/${orders[i].restaurant}`)
+    // let res = await fetch(`http://localhost:${PORT}/api/restaurants/${orders[i].restaurant}`)
     // let restaurant = await res.json()
     // console.log(restaurant.name)
 
