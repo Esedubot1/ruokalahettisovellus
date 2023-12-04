@@ -14,7 +14,7 @@ let orders = []
 let totalPrice = 0
 
 async function getRestaurants() {
-    await fetch("http://localhost:3001/api/restaurants")
+    await fetch(`http://localhost:${PORT}/api/restaurants`)
         .then(response => response.json())
         .then(data => data.forEach(element => {
             restaurants.push(element)
@@ -73,12 +73,12 @@ async function getProducts(id){
     productions = []
     let productCounter = 0
     document.getElementById("restaurant-products").innerHTML = null
-    await fetch(`http://localhost:3001/api/products/from/${id}`)
+    await fetch(`http://localhost:${PORT}/api/products/from/${id}`)
         .then(response => response.json())
         .then(data => data.forEach(element => {
             productions.push(element)
         }))
-    let res = await fetch(`http://localhost:3001/api/restaurants/${id}`)
+    let res = await fetch(`http://localhost:${PORT}/api/restaurants/${id}`)
     let restaurantName = await res.json()
     document.getElementById("restaurant-name").innerHTML = ("From: " + restaurantName.name)
     productions.forEach(element => {
@@ -148,7 +148,7 @@ async function orderUpdate(){
 
         // Product Restaurant Name 
         let newOrderRestaurantName = document.createElement("p")
-        let res = await fetch(`http://localhost:3001/api/restaurants/${orders[i].restaurant}`)
+        let res = await fetch(`http://localhost:${PORT}/api/restaurants/${orders[i].restaurant}`)
         let orderRestaurantName = await res.json()
         newOrderRestaurantName.innerHTML = orderRestaurantName.name
         newOrderDiv.appendChild(newOrderRestaurantName)
@@ -222,7 +222,7 @@ async function submitOrder(){
         return
     }
 
-    let res = await fetch(`http://localhost:3001/api/orders`, {
+    let res = await fetch(`http://localhost:${PORT}/api/orders`, {
       method: "POST",
       body: JSON.stringify({restaurant: exampleRestaurant, address: address, products: productIDs}),
       headers: {"Content-Type": "application/json", "Authorization": "Bearer " + token}
@@ -238,7 +238,7 @@ let userOrders = []
 async function getOrders() {
     userOrders = []
     document.getElementById("userOrders").innerHTML = null
-    await fetch("http://localhost:3001/api/orders/from/thisuser", {headers: {"Authorization": "Bearer " + token}})
+    await fetch(`http://localhost:${PORT}/api/orders/from/thisuser`, {headers: {"Authorization": "Bearer " + token}})
         .then(response => response.json())
         .then(data => data.forEach(element => {
             userOrders.push(element)
@@ -259,7 +259,7 @@ async function getOrders() {
 
         // Restaurant name
         let newUserOrderRestaurant = document.createElement("p")
-        let res = await fetch(`http://localhost:3001/api/restaurants/${userOrders[i].restaurant}`)
+        let res = await fetch(`http://localhost:${PORT}/api/restaurants/${userOrders[i].restaurant}`)
         let restaurant = await res.json()
         console.log(restaurant.name)
         newUserOrderRestaurant.innerHTML = (restaurant.name)
@@ -302,7 +302,7 @@ async function showOrder(event){
     let userOrderId = event.target.id
     
     for (let i = 0; i < userOrders[userOrderId].products.length; i++){
-        let res = await fetch(`http://localhost:3001/api/products/${userOrders[userOrderId].products[i]}`)
+        let res = await fetch(`http://localhost:${PORT}/api/products/${userOrders[userOrderId].products[i]}`)
         let product = await res.json()
         console.log(product)
 

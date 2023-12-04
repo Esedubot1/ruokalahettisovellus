@@ -1,5 +1,3 @@
-baseurl = "http://localhost:3001/api/login"
-
 let mode = "user"
 
 const errorText = document.getElementById("error-text")
@@ -11,7 +9,7 @@ async function submit(){
     console.log(inputUser)
     console.log(inputPassword)
 
-    const res = await fetch(`http://localhost:3001/api/login/${mode}`, {
+    const res = await fetch(`http://localhost:${PORT}/api/login/${mode}`, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({username: inputUser, password: inputPassword})

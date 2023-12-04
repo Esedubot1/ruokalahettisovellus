@@ -1,4 +1,4 @@
- /* Tokenin haku */
+/* Tokenin haku */
 const loggedDelivererJSON = window.localStorage.getItem('loggedDeliverer')
 const deliverer = JSON.parse(loggedDelivererJSON)
 if (deliverer === null) {
@@ -10,7 +10,7 @@ async function getOrders() {
   const orders = []
   document.getElementById("allOrders").innerHTML = null
   document.getElementById("myOrders").innerHTML = null
-  await fetch("http://localhost:3001/api/orders/")
+  await fetch(`http://localhost:${PORT}/api/orders/`)
       .then(response => response.json())
       .then(data => data.forEach(element => {
           orders.push(element)
@@ -30,7 +30,7 @@ async function getOrders() {
 
       // Restaurant name
       let newOrderRestaurant = document.createElement("p")
-      let res = await fetch(`http://localhost:3001/api/restaurants/${orders[i].restaurant}`)
+      let res = await fetch(`http://localhost:${PORT}/api/restaurants/${orders[i].restaurant}`)
       let restaurant = await res.json()
       console.log(restaurant.name)
       newOrderRestaurant.innerHTML = (restaurant.name)
@@ -92,7 +92,7 @@ async function getOrders() {
 }
 
 async function updateOrder(order) {
-    await fetch(`http://localhost:3001/api/orders/${order}`, {
+    await fetch(`http://localhost:${PORT}/api/orders/${order}`, {
         method: "PUT",
         headers: {"Authorization": "Bearer " + token}
     })
