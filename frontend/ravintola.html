@@ -40,15 +40,32 @@
       <button class="order-refresh-button" id="order-refresh-button" onclick="getRestaurantOrders()">Refresh</button>
     </div>
     <div class="restaurant-orders" id="restaurant-orders">
-
     </div>
+
     <h1>Products</h1>
     <div class="restaurant-order-productions" id="restaurant-order-productions">
-      
     </div>
+
+    <div id="addProductForm">
+      <h1>Add new product</h1>
+      <p>Name: <input type="text" id="newProductName" style="border: solid 1px black"></p>
+      <p>Price: <input type="text" id="newProductPrice"  style="border: solid 1px black"></p>
+      <p>Ingredients: <input type="text" id="newProductIngredients"  style="border: solid 1px black"></p>
+      <button onclick="addProduct()">Submit</button>
+    </div>
+
+    <div id="editProductForm" style="display: none">
+      <h1 id="editingText">Edit product</h1>
+      <p>Name: <input type="text" id="editProductName" style="border: solid 1px black"></p>
+      <p>Price: <input type="text" id="editProductPrice"  style="border: solid 1px black"></p>
+      <p>Ingredients: <input type="text" id="editProductIngredients"  style="border: solid 1px black"></p>
+      <button onclick="editProduct(selectedProductId)">Submit</button>
+    </div>
+
+    <p class="error-text" id="error-text"></p>
   </div>
 
 </body>
   <script src="config.js"></script>
-  <script src="ravintola/script.js"></script>
+  <script src="ravintola/script2.js"></script>
 </html>

@@ -39,3 +39,130 @@ async function markAsDone(event){
     let orderId = event.target.id
 
 }
+
+function emptyProductList()
+// Funktio tyhjennetään HTML-lomakkeen PRODUCTION-alueen
+{
+  let prx=document.getElementById("ProductList");
+  while(prx.firstChild) {
+    prx.removeChild(prx.firstChild);
+  }
+}
+
+function refreshOrderList(prx) {
+// ladataan tilaukset ORDERS-listaan, jotta Valmis indikaattori paikalleen
+// tyhjennetään vanha OrdersList;
+  var i,L,r1,r2,x,OrderItem;
+
+  getRestaurantOrders()
+ 
+  L = prx.options.length - 1;
+  for(i = L; i >= 0; i--) {
+      prx.remove(i);
+  }
+  
+
+//Viedään tilaukset uudestaanHTML-lomakkeen ORDERS-ikkunaan 
+  L=orders.length;
+  for (i=0; i<L; i++)
+  {  OrderItem=document.createElement("option");
+     r1=orders[i].restaurant;
+     r2=orders[i].recipient;
+     x="Ord "+ i.toString() + " ..."+ valmis[i]+" ...Tilaaja:" + r2 + " ...Ravintola:" + r1; 
+     OrderItem.value = i.toString();
+     OrderItem.text=x;
+     OrderList.appendChild(OrderItem)
+  }
+  emptyProductList();
+}
+
+
+function changeProductList()
+// Funktio näyttää Orders-ikkunassa valitun tilauksen tuotteet Products-ikkunassa 
+{  var j,i,ProductItem,xpi,L; 
+// Valitun tilauksen indeksi
+   j=OrderList.selectedIndex;
+// tyhjennetään Products-ikkuna
+ 
+   emptyProductList(); 
+  
+// Haetaan tilauksen nro j tuotteet vastaavasta products-taulukosta
+// Rakennetaan tilauksista li-rivit ol-listaan
+   L=orders[j].products.length;
+   for (let i=0; i<L; i++) {
+     ProductItem=document.createElement("li");
+     xpi=orders[j].products[i].product;
+     ProductItem.text=xpi;
+     ProductList.appendChild(ProductItem);
+     ProductItem.innerHTML=xpi;
+     prlist.appendChild(ProductList);} 
+}
+
+function changeOrderStatusReady()
+{
+// Muutetaan tilaus statukselle VALMIS
+   var i,OrderItem,r1,r2,x,L,prx;
+   L=orders.length;
+   i=OrderList.selectedIndex;
+   valmis[i]="*READY*"; 
+
+// tyhjennetään vanha OrdersList
+  prx=document.getElementById("OrderList"); 
+  refreshOrderList(prx);
+  
+ 
+}  
+
+function getRestaurantOrders(){
+
+// orders-taulukon jäsennys
+  var i,L,prx, OrderItem, r1,r2,x;
+   
+  /* obj=JSON.parse(orders); */
+
+ 
+
+// Kaikki tilaukset statukselle "Tilattu";
+  valmis=[];
+  L=orders.length;
+  for (i=0; i<L; i++) valmis[i]="-tilattu-";  
+
+// Tilaukset HTML-lomakkeen ORDERS-ikkunaan
+  prx=document.getElementById("OrderList"); 
+  refreshOrderList(prx);
+
+
+//Muutostilanteessa aktivoidaan Products-ikkunan muutos
+  OrderList.addEventListener('change', changeProductList);
+   
+// Tyhjennetään Product lista 
+  
+  emptyProductList();	
+
+// Tuoteriviksi aluksi ohje
+  let ProductItem=document.createElement("li");
+  let xpi="--- Valitse tilaus, niin saat tuoterivit tähän ---";
+  ProductList.appendChild(ProductItem);
+  ProductItem.innerHTML=xpi;
+ 
+}
+ 
+//HTML-lomakkeen ja muuttujien alkuasetuksia
+  let obj=""; let valmis=[];
+  let prgn=document.getElementById("restaurant-orders");
+  let OrderList=document.createElement("select");
+  OrderList.id ="OrderList";
+// Kuinka monta tilausta näkyy ikkunassa kerralla
+  OrderList.size=3;
+  let OrderItem=document.createElement("option");
+  OrderItem.text="EMPTY - PAINA REFRESH";  
+  OrderList.appendChild(OrderItem);
+  prgn.appendChild(OrderList);
+  prlist=document.getElementById("restaurant-order-productions");
+  const newButton = document.createElement('button');
+  newButton.textContent = 'Tilaus VALMIS';
+  prlist.appendChild(newButton);
+  newButton.addEventListener('click',changeOrderStatusReady); 
+  let ProductList=document.createElement("ol");
+  ProductList.id ="ProductList";
+  prlist.appendChild(ProductList); 
